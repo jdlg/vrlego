@@ -10,14 +10,13 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.utils.Converters;
 
 /**
- * Calculates a perspective homography from 4 points, and applies it to other
- * point
+ * Calculates a homography from 4 points, and applies it to other point
  * 
  * @author Johan LG
  * 
  */
-public class PerspectiveChanger {
-	private double width, height;
+public class HomographyTransorm {
+	private double width, heigth;
 	private Mat h;
 
 	/**
@@ -26,18 +25,32 @@ public class PerspectiveChanger {
 	 *            A list of 4 points corresponding to the corners of
 	 *            quadrilateral
 	 */
-	public PerspectiveChanger(ArrayList<Point> points) {
+	public HomographyTransorm(ArrayList<Point> points) {
+		//TODO 4 POINTS?
 		width = 100;
-		height = 100;
+		heigth = 100;
 		h = calculatePerspectiveTransform(points);
+	}
+
+	public HomographyTransorm(ArrayList<Point> points, double width,
+			double heigth) {
+		this.width = width;
+		this.heigth = heigth;
+		h = calculatePerspectiveTransform(points);
+		//System.out.println("h: " +h.dump());
 	}
 
 	private Mat calculatePerspectiveTransform(ArrayList<Point> points) {
 		ArrayList<Point> toPoints = new ArrayList<>();
-		toPoints.add(new Point(0, 0));
-		toPoints.add(new Point(width, 0));
-		toPoints.add(new Point(width, height));
-		toPoints.add(new Point(0, height));
+		// toPoints.add(new Point(0, 0));
+		// toPoints.add(new Point(width, 0));
+		// toPoints.add(new Point(width, heigth));
+		// toPoints.add(new Point(0, heigth));
+		System.out.println(width + " " + heigth);
+		toPoints.add(new Point(-width / 2, -heigth / 2));
+		toPoints.add(new Point(width / 2, -heigth / 2));
+		toPoints.add(new Point(width / 2, heigth / 2));
+		toPoints.add(new Point(-width / 2, heigth / 2));
 
 		Mat fromMat = Converters.vector_Point_to_Mat(points);
 		Mat toMat = Converters.vector_Point_to_Mat(toPoints);
@@ -57,6 +70,7 @@ public class PerspectiveChanger {
 	 */
 
 	public ArrayList<Point> applyTransform(ArrayList<Point> points) {
+
 		Mat pointMat = Converters.vector_Point_to_Mat(points);
 		pointMat.convertTo(pointMat, CvType.CV_32FC2);
 
@@ -66,5 +80,20 @@ public class PerspectiveChanger {
 		Converters.Mat_to_vector_Point(pointMat, results);
 
 		return results;
+	}	
+	
+	public Point applyTransform(Point point) {
+		ArrayList<Point> points = new ArrayList<>();
+		points.add(point);
+		
+		Mat pointMat = Converters.vector_Point_to_Mat(points);
+		pointMat.convertTo(pointMat, CvType.CV_32FC2);
+
+		Core.perspectiveTransform(pointMat, pointMat, h);
+
+		ArrayList<Point> results = new ArrayList<Point>();
+		Converters.Mat_to_vector_Point(pointMat, results);
+
+		return results.get(0);
 	}
 }

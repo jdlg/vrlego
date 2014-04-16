@@ -1,6 +1,7 @@
 package tracking;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -32,7 +33,7 @@ public class TrackingTestProgram {
 		Mat image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
-//		final HSVRange green = HSVRangeSerialization.unserialize("green");
+		// final HSVRange green = HSVRangeSerialization.unserialize("green");
 		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
 		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
@@ -45,29 +46,36 @@ public class TrackingTestProgram {
 				super.paintComponent(g);
 				pointTracker.uppdateImage(mat);
 				g.setColor(Color.black);
-//				for (Point p : new PointTracker(mat, this)
-//						.findePoints(green, 2)) {
-//					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-//					g.drawString("green", (int) p.x + 12, (int) p.y + 12);
-//				}
-				for (Point p : pointTracker.findPoints(blue, 2)) {
+				// for (Point p : new PointTracker(mat, this)
+				// .findePoints(green, 2)) {
+				// g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+				// g.drawString("green", (int) p.x + 12, (int) p.y + 12);
+				// }
+				for (Point p : pointTracker.findPoints(blue, 4)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
+					//System.out.println(p.x + " " + p.y);
 				}
-				for (Point p : pointTracker.findPoints(red, 1)) {
-					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("red", (int) p.x + 12, (int) p.y + 12);
-
-				}
+//				System.out.println();
+//				for (Point p : pointTracker.findPoints(red, 1)) {
+//					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+//					g.drawString("red", (int) p.x + 12, (int) p.y + 12);
+//
+//				}
 				for (Point p : pointTracker.findPoints(yellow, 1)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("yellow", (int) p.x + 12, (int) p.y + 12);
 				}
+				
 			}
 		};
 		camFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		camFrame.setContentPane(camPanel);
-		camFrame.setVisible(true);
-		camFrame.setSize(640, 480);
+		camFrame.setVisible(true);	
+		camPanel.setPreferredSize(new Dimension(image.width(), image.height()));
+		camFrame.pack();
+		//camFrame.setSize(image.width(), image.height());
+		//System.out.println(image.height()+" "+image.width());
+		//System.out.println();
 	}
 }

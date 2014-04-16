@@ -12,7 +12,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.perspective.PerspectiveChanger;
+import computerVision.perspective.HomographyTransorm;
 import computerVision.tracking.HSVRange;
 import computerVision.tracking.PointTracker;
 import computerVision.video.VideoReader;
@@ -45,27 +45,80 @@ public class HomographyTestProgram {
 		final PointTracker pointTracker = new PointTracker(image);
 
 		// TODO temp høyest x verdi er blue1
-		ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 2);
-		Point bluePoint1;
-		Point bluePoint2;
-		if (bluePoints.get(0).x > bluePoints.get(1).x) {
-			bluePoint1 = bluePoints.get(0);
-			bluePoint2 = bluePoints.get(1);
-		} else {
-			bluePoint1 = bluePoints.get(1);
-			bluePoint2 = bluePoints.get(0);
-		}
+		ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 4);
+		// Point bluePoint1;
+		// Point bluePoint2;
+		// if (bluePoints.get(0).x > bluePoints.get(1).x) {
+		// bluePoint1 = bluePoints.get(0);
+		// bluePoint2 = bluePoints.get(1);
+		// } else {
+		// bluePoint1 = bluePoints.get(1);
+		// bluePoint2 = bluePoints.get(0);
+		// }
 		//
 
-		ArrayList<Point> corners = new ArrayList<>();
-		corners.add(bluePoint1);
-		corners.addAll(pointTracker.findPoints(red, 1));
-		corners.add(bluePoint2);
-		corners.addAll(pointTracker.findPoints(yellow, 1));
+		// ArrayList<Point> yellowPoints = pointTracker.findPoints(yellow, 2);
+		// Point yellowPoint1;
+		// Point yellowPoint2;
+		// if (yellowPoints.get(0).x > bluePoints.get(1).x) {
+		// yellowPoint1 = yellowPoints.get(0);
+		// yellowPoint2 = yellowPoints.get(1);
+		// } else {
+		// yellowPoint1 = yellowPoints.get(1);
+		// yellowPoint2 = yellowPoints.get(0);
+		// }
+		//
+		// ArrayList<Point> corners = new ArrayList<>();
+		// corners.add(bluePoint1);
+		// corners.add(yellowPoint1);
+		// corners.add(bluePoint2);
+		// corners.add(yellowPoint2);
+
+		// corners.add(bluePoint1);
+		// corners.addAll(pointTracker.findPoints(red, 1));
+		// corners.add(bluePoint2);
+		// corners.addAll(pointTracker.findPoints(yellow, 1));
 
 		// get perspective changer
-		final PerspectiveChanger perspectiveChanger = new PerspectiveChanger(
-				corners);
+		// final PerspectiveChanger perspectiveChanger = new PerspectiveChanger(
+		// corners);
+
+		// find center point
+		double xsum = 0, ysum = 0;
+		for (int i = 0; i < 4; i++) {
+			xsum += bluePoints.get(i).x;
+			ysum += bluePoints.get(i).y;
+		}
+		Point center = new Point(xsum / 4, ysum / 4);
+
+		ArrayList<Point> topPoints = new ArrayList<>();
+		ArrayList<Point> botPoints = new ArrayList<>();
+
+		for (Point p : bluePoints) {
+			if (p.y < center.y)
+				topPoints.add(p);
+			else {
+				botPoints.add(p);
+			}
+		}
+
+		Point tl = topPoints.get(0).x > topPoints.get(1).x ? topPoints.get(0)
+				: topPoints.get(1);
+		Point tr = topPoints.get(0).x > topPoints.get(1).x ? topPoints.get(1)
+				: topPoints.get(0);
+		Point bl = botPoints.get(0).x > botPoints.get(1).x ? botPoints.get(1)
+				: botPoints.get(1);
+		Point br = botPoints.get(0).x > botPoints.get(1).x ? botPoints.get(0)
+				: botPoints.get(0);
+
+		ArrayList<Point> points = new ArrayList<>();
+		points.add(tl);
+		points.add(tr);
+		points.add(br);
+		points.add(bl);
+
+		final HomographyTransorm perspectiveChanger = new HomographyTransorm(
+				points);
 
 		// paintComponent:
 		// finde points
@@ -74,13 +127,22 @@ public class HomographyTestProgram {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
+
+				// boolean b = true;
+				// int i = b ? 1 : 2;
+				// System.out.println(i);
+				// b = false;
+				// i = b ? 1 : 2;
+				// System.out.println(i);
+
 				pointTracker.uppdateImage(image);
 				int r = 20;
 				int c = 250;
 
-				ArrayList<Point> bluePoints = pointTracker.findPoints(blue,2);
-				ArrayList<Point> redPoints = pointTracker.findPoints(red,1);
-				ArrayList<Point> yellowPoints = pointTracker.findPoints(yellow,1);
+				ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 4);
+				// ArrayList<Point> redPoints = pointTracker.findPoints(red,1);
+				// ArrayList<Point> yellowPoints =
+				// pointTracker.findPoints(yellow,2);
 
 				if (bluePoints.size() > 0) {
 					for (Point p : perspectiveChanger
@@ -91,22 +153,23 @@ public class HomographyTestProgram {
 					}
 				}
 
-				if (redPoints.size() > 0) {
-					for (Point p : perspectiveChanger.applyTransform(redPoints)) {
-						g.setColor(Color.red);
-						g.fillOval((int) p.x - r + c, (int) p.y - r + c, 2 * r,
-								2 * r);
-					}
-				}
-
-				if (yellowPoints.size() > 0) {
-					for (Point p : perspectiveChanger
-							.applyTransform(yellowPoints)) {
-						g.setColor(Color.yellow);
-						g.fillOval((int) p.x - r + c, (int) p.y - r + c, 2 * r,
-								2 * r);
-					}
-				}
+				// if (redPoints.size() > 0) {
+				// for (Point p : perspectiveChanger.applyTransform(redPoints))
+				// {
+				// g.setColor(Color.red);
+				// g.fillOval((int) p.x - r + c, (int) p.y - r + c, 2 * r,
+				// 2 * r);
+				// }
+				// }
+				//
+				// if (yellowPoints.size() > 0) {
+				// for (Point p : perspectiveChanger
+				// .applyTransform(yellowPoints)) {
+				// g.setColor(Color.yellow);
+				// g.fillOval((int) p.x - r + c, (int) p.y - r + c, 2 * r,
+				// 2 * r);
+				// }
+				// }
 			}
 		};
 

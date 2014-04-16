@@ -9,13 +9,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import game.Joystick;
-import game.Player;
 
 public class PlayerToNXT extends JFrame implements KeyListener {
 
 	private static int x = 0, y = 0;
 	private static boolean u = false, d = false, l = false, r = false;
-	private static SendInstructions sender;
+	private static InstructionsSender sender;
 //	private static Joystick stick = new Joystick();
 
 	public PlayerToNXT() {
@@ -23,7 +22,7 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 		setContentPane(new controlsPanel());
 		addKeyListener(this);
 		setPreferredSize(new Dimension(100, 120));
-		sender = new SendInstructions("usb://");
+		sender = new InstructionsSender("usb://");
 	}
 
 	public static void main(String[] args) {

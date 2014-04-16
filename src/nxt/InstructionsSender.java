@@ -13,11 +13,11 @@ import lejos.pc.comm.NXTConnector;
  * 
  */
 
-public class SendInstructions {
+public class InstructionsSender {
 
 	DataOutputStream dos;
 
-	public SendInstructions(String deviceURL) {
+	public InstructionsSender(String deviceURL) {
 		NXTConnector connector = new NXTConnector();
 		if (!connector.connectTo(deviceURL)) {
 			System.out.println("Not connected");

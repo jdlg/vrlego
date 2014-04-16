@@ -4,7 +4,7 @@ public class TankControlTest {
 
 	public static void main(String[] args) throws InterruptedException {
 		int w = 2000;
-		SendInstructions sender = new SendInstructions("usb://");
+		InstructionsSender sender = new InstructionsSender("usb://");
 //		sender.sendInstruction(31, 0);
 //		Thread.sleep(w);
 		sender.sendInstruction(-31, 31);

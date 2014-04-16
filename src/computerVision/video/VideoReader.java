@@ -1,6 +1,9 @@
 package computerVision.video;
 
+import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Size;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
@@ -24,7 +27,7 @@ public class VideoReader implements Runnable {
 		capture.read(this.imageMat);
 		capture.read(this.imageMat);
 		capture.read(this.imageMat);
-		//TODO ?
+		// TODO ?
 	}
 
 	@Override
@@ -37,6 +40,10 @@ public class VideoReader implements Runnable {
 					e.printStackTrace();
 				}
 				capture.read(imageMat);
+//				MatOfPoint2f points = new MatOfPoint2f();
+//				Calib3d.findChessboardCorners(imageMat, new Size(5,4), points);
+//				Calib3d.drawChessboardCorners(imageMat, new Size(5,4), points,
+//						true);
 			}
 		}
 	}

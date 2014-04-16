@@ -79,7 +79,7 @@ public class PointTracker {
 		// for holding the center of the objects that will be returned
 
 		if (numObjects > 0) {
-			if (numObjects < MAX_NUM_OBJECTS) {
+//			if (numObjects < MAX_NUM_OBJECTS) {
 
 				double foundObjects = 0;
 				HashMap<Double, Point> area2Points = new HashMap<>();
@@ -98,16 +98,17 @@ public class PointTracker {
 					}
 				}
 				
-				// Ad the center point of the largest areas to the points list
-				Arrays.sort(areas);// TODO nødvendig
+				// Add the center point of the largest areas to the points list
+				Arrays.sort(areas);// TODO nødvendig?
 				if (expectedPoints > foundObjects)
 					expectedPoints = (int) foundObjects;
 				for (int i = 0; i < expectedPoints; i++) {
 					points.add(area2Points.get(areas[areas.length - 1 - i]));
 				}
+				//System.out.println(points.size());
 
-			} else
-				System.out.println("To mutch noise");
+//			} else
+//				System.out.println("To mutch noise");
 		}
 
 		return points;

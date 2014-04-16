@@ -1,5 +1,6 @@
 package computerVision.colorCalibration;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -48,11 +49,14 @@ public class ManualColorCalibrationMain {
 
 		JFrame sliderFrame = new JFrame();
 		JPanel sliderPanel = new JPanel(new GridBagLayout());
+		sliderPanel.setPreferredSize(new Dimension(300, 420));
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		sliderFrame.setContentPane(sliderPanel);
 		sliderFrame.setVisible(true);
-		sliderFrame.setSize(300, 420);
+		//sliderFrame.setSize(300, 420);
+		sliderFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		sliderFrame.pack();
 		// sliderFrame.setLayout(new GridLayout(7, 2));
 
 		final JSlider[] minSliders = { new JSlider(0, 255, 0),

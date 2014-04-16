@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.opencv.core.Core;
 import org.opencv.core.Point;
 
-import computerVision.perspective.PerspectiveChanger;
+import computerVision.perspective.HomographyTransorm;
 
 public class PerspectiveChangerTest {
 
@@ -31,7 +31,7 @@ public class PerspectiveChangerTest {
 		corners.add(new Point(82, 148));
 		corners.add(new Point(272, 25));
 		corners.add(new Point(476, 133));
-		PerspectiveChanger perspectiveChanger = new PerspectiveChanger(corners);
+		HomographyTransorm perspectiveChanger = new HomographyTransorm(corners);
 
 		ArrayList<Point> points = new ArrayList<>();
 		points.add(new Point(335, 261));
