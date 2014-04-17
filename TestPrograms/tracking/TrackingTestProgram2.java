@@ -23,7 +23,7 @@ import computerVision.colorCalibration.ManualColorCalibration;
 import computerVision.gui.BGRMatPanel;
 import computerVision.gui.GrayMatPanel;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class TrackingTestProgram2 {
@@ -48,7 +48,7 @@ public class TrackingTestProgram2 {
 		 */
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
-			PointTracker pointTracker = new PointTracker(mat);;
+			PointFinder pointTracker = new PointFinder(mat);;
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);

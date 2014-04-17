@@ -14,7 +14,7 @@ import org.opencv.core.Point;
 import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.perspective.HomographyTransorm;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class HomographyTestProgram {
@@ -42,7 +42,7 @@ public class HomographyTestProgram {
 		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
 
-		final PointTracker pointTracker = new PointTracker(image);
+		final PointFinder pointTracker = new PointFinder(image);
 
 		// TODO temp høyest x verdi er blue1
 		ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 4);

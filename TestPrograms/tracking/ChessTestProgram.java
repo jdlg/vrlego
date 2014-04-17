@@ -26,7 +26,7 @@ import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.gui.BGRMatPanel;
 import computerVision.perspective.HomographyTransorm;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class ChessTestProgram {

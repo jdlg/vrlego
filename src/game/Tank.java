@@ -1,16 +1,20 @@
 package game;
 
+import nxt.InstructionsSender;
+
 import com.jme3.math.Quaternion;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
-public class Tanx extends Node {
+public class Tank extends Node {
 
 	private float x = 0, z = 0, angle = 0;
 	private Geometry geom;
+	private InstructionsSender sender;
 
-	public Tanx(Geometry geom) {
+	public Tank(Geometry geom, InstructionsSender sender) {
 		this.geom = geom;
+		this.sender = sender;
 		attachChild(geom);
 	}
 
@@ -28,5 +32,9 @@ public class Tanx extends Node {
 		Quaternion rotation = new Quaternion();
 		rotation.fromAngles(0, angle, 0);
 		setLocalRotation(rotation);
+	}
+
+	public void preformInstruction(int rotation, int speed) {
+		sender.sendInstruction(rotation, speed);
 	}
 }

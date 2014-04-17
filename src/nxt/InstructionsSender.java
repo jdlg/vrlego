@@ -7,7 +7,7 @@ import lejos.pc.comm.NXTConnector;
 
 /**
  * Sends instructions to the NXT. Instructions are sent as 2 ints from -31 to
- * 31, and can be recived and executed by an NXT running ReciveInstructions
+ * 31, and can be recived and executed by an NXT running ReciveInst
  * 
  * @author Johan LG
  * 
@@ -15,7 +15,7 @@ import lejos.pc.comm.NXTConnector;
 
 public class InstructionsSender {
 
-	DataOutputStream dos;
+	private DataOutputStream dos;
 
 	public InstructionsSender(String deviceURL) {
 		NXTConnector connector = new NXTConnector();
@@ -50,7 +50,6 @@ public class InstructionsSender {
 		try {
 			dos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

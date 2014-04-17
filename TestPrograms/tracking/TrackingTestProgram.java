@@ -16,7 +16,7 @@ import org.opencv.core.Point;
 import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.gui.BGRMatPanel;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class TrackingTestProgram {
@@ -37,7 +37,7 @@ public class TrackingTestProgram {
 		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
 		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
-		final PointTracker pointTracker = new PointTracker(image);
+		final PointFinder pointTracker = new PointFinder(image);
 
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {

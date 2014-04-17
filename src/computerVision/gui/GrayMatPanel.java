@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.utils.MatConvert;
 
 /**

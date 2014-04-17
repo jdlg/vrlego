@@ -16,13 +16,13 @@ import computerVision.gui.BGRMatPanel;
  * @author Johan LG
  */
 
-public class PointTracker {
+public class PointFinder {
 
 	private Mat hsvMat;
 	private final int MAX_NUM_OBJECTS = 50;
 	private final double MIN_OBJECT_AREA = 20;// TODO
 
-	public PointTracker(Mat bgrMat) {
+	public PointFinder(Mat bgrMat) {
 		hsvMat = new Mat();
 		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
 	}
@@ -30,7 +30,7 @@ public class PointTracker {
 	public ArrayList<Point> findPoints(HSVRange range) {
 		return findPoints(range, MAX_NUM_OBJECTS);
 	}
-	
+
 	public void uppdateImage(Mat bgrMat) {
 		hsvMat = new Mat();
 		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
@@ -58,8 +58,8 @@ public class PointTracker {
 				grayMat);
 
 		// Reduce noise
-//		Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
-//		Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
+		// Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
+		// Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
 		Imgproc.blur(grayMat, grayMat, new Size(3, 3));
 
 		ArrayList<MatOfPoint> contours = new ArrayList<>();
@@ -79,36 +79,35 @@ public class PointTracker {
 		// for holding the center of the objects that will be returned
 
 		if (numObjects > 0) {
-//			if (numObjects < MAX_NUM_OBJECTS) {
+			// if (numObjects < MAX_NUM_OBJECTS) {
 
-				double foundObjects = 0;
-				HashMap<Double, Point> area2Points = new HashMap<>();
-				// To select the largest objects
+			double foundObjects = 0;
+			HashMap<Double, Point> area2Points = new HashMap<>();
+			// To select the largest objects
 
-				double[] areas = new double[(int) numObjects];
-				for (int i = 0; i < numObjects; i++) {
-					Moments moment = Imgproc.moments(contours.get(i));
-					double area = moment.get_m00();
-					if (area > MIN_OBJECT_AREA) {
-						area2Points.put(area, new Point(
-								moment.get_m10() / area, moment.get_m01()
-										/ area));
-						areas[i] = area;
-						foundObjects++;
-					}
+			double[] areas = new double[(int) numObjects];
+			for (int i = 0; i < numObjects; i++) {
+				Moments moment = Imgproc.moments(contours.get(i));
+				double area = moment.get_m00();
+				if (area > MIN_OBJECT_AREA) {
+					area2Points.put(area, new Point(moment.get_m10() / area,
+							moment.get_m01() / area));
+					areas[i] = area;
+					foundObjects++;
 				}
-				
-				// Add the center point of the largest areas to the points list
-				Arrays.sort(areas);// TODO nødvendig?
-				if (expectedPoints > foundObjects)
-					expectedPoints = (int) foundObjects;
-				for (int i = 0; i < expectedPoints; i++) {
-					points.add(area2Points.get(areas[areas.length - 1 - i]));
-				}
-				//System.out.println(points.size());
+			}
 
-//			} else
-//				System.out.println("To mutch noise");
+			// Add the center point of the largest areas to the points list
+			Arrays.sort(areas);// TODO nødvendig?
+			if (expectedPoints > foundObjects)
+				expectedPoints = (int) foundObjects;
+			for (int i = 0; i < expectedPoints; i++) {
+				points.add(area2Points.get(areas[areas.length - 1 - i]));
+			}
+			// System.out.println(points.size());
+
+			// } else
+			// System.out.println("To mutch noise");
 		}
 
 		return points;

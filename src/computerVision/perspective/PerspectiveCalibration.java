@@ -7,7 +7,7 @@ import org.opencv.core.Point;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 
 public class PerspectiveCalibration {
 
@@ -32,7 +32,7 @@ public class PerspectiveCalibration {
 		case BLUE_POINTS:
 
 			HSVRange blue = HSVRangeSerialization.unserialize("blue");
-			final PointTracker pointTracker = new PointTracker(image);
+			final PointFinder pointTracker = new PointFinder(image);
 			ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 4);
 
 			// TODO if fail

@@ -37,7 +37,7 @@ import computerVision.perspective.Calibration;
 import computerVision.perspective.PerspectiveCalibration;
 import computerVision.perspective.HomographyTransorm;
 import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointTracker;
+import computerVision.tracking.PointFinder;
 import computerVision.utils.MatConvert;
 
 public class SimpleARWithNXT extends SimpleApplication {
@@ -45,16 +45,16 @@ public class SimpleARWithNXT extends SimpleApplication {
 	// TODO rydd opp
 	private static VideoCapture capture;
 	private Picture cameraPicture = new Picture("background");
-	private Tanx tanx;
+	private Tank tanx;
 	private static HomographyTransorm perspectiveChanger;
-	private static PointTracker pointTracker;
+	private static PointFinder pointTracker;
 	private static Mat image;
 	private HSVRange blue, red, yellow, green;
 	private static Mat rvec, tvec;
 	Camera cam2;
 	double ty, tx;
 	double chessz;
-	Tanx center;
+	Tank center;
 	static InstructionsSender sender;
 
 	// private static double xa = 0;
@@ -104,13 +104,13 @@ public class SimpleARWithNXT extends SimpleApplication {
 		Geometry teaGeom = (Geometry) assetManager
 				.loadModel("Models/Teapot/Teapot.obj");
 
-		tanx = new Tanx(teaGeom);
+		tanx = new Tank(teaGeom);
 		tanx.scale(20f);
 		rootNode.attachChild(tanx);
 
 		Geometry centerGeom = (Geometry) assetManager
 				.loadModel("Models/Teapot/Teapot.obj");
-		center = new Tanx(centerGeom);
+		center = new Tank(centerGeom);
 		center.scale(3f);
 		rootNode.attachChild(center);
 
@@ -145,43 +145,43 @@ public class SimpleARWithNXT extends SimpleApplication {
 				new KeyTrigger(KeyInput.KEY_SPACE));
 
 		// 13
-		inputManager.addMapping("right", new KeyTrigger(KeyInput.KEY_RIGHT));
-		inputManager.addMapping("up", new KeyTrigger(KeyInput.KEY_UP));
-		inputManager.addMapping("left", new KeyTrigger(KeyInput.KEY_LEFT));
-		inputManager.addMapping("down", new KeyTrigger(KeyInput.KEY_DOWN));
-		inputManager.addListener(actionListener, "chessCalib");
-		inputManager.addListener(new ActionListener() {
-
-			int value = 10, r = 0, u = 0, l = 0, d = 0;
-
-			@Override
-			public void onAction(String name, boolean press, float arg2) {
-				int x = 0, y = 0;
-				if (press) {
-					if (name.equals("right"))
-						r = value;
-					if (name.equals("up"))
-						u = value;
-					if (name.equals("left"))
-						l = value;
-					if (name.equals("down"))
-						d = value;
-				} else {
-					if (name.equals("right"))
-						r = 0;
-					if (name.equals("up"))
-						u = 0;
-					if (name.equals("left"))
-						l = 0;
-					if (name.equals("down"))
-						d = 0;
-				}
-
-				x = r - l;
-				y = d - u;
-				sender.sendInstruction(x, y);
-			}
-		}, "right", "up", "left", "down");
+//		inputManager.addMapping("right", new KeyTrigger(KeyInput.KEY_RIGHT));
+//		inputManager.addMapping("up", new KeyTrigger(KeyInput.KEY_UP));
+//		inputManager.addMapping("left", new KeyTrigger(KeyInput.KEY_LEFT));
+//		inputManager.addMapping("down", new KeyTrigger(KeyInput.KEY_DOWN));
+//		inputManager.addListener(actionListener, "chessCalib");
+//		inputManager.addListener(new ActionListener() {
+//
+//			int value = 10, r = 0, u = 0, l = 0, d = 0;
+//
+//			@Override
+//			public void onAction(String name, boolean press, float arg2) {
+//				int x = 0, y = 0;
+//				if (press) {
+//					if (name.equals("right"))
+//						r = value;
+//					if (name.equals("up"))
+//						u = value;
+//					if (name.equals("left"))
+//						l = value;
+//					if (name.equals("down"))
+//						d = value;
+//				} else {
+//					if (name.equals("right"))
+//						r = 0;
+//					if (name.equals("up"))
+//						u = 0;
+//					if (name.equals("left"))
+//						l = 0;
+//					if (name.equals("down"))
+//						d = 0;
+//				}
+//
+//				x = r - l;
+//				y = d - u;
+//				sender.sendInstruction(x, y);
+//			}
+//		}, "right", "up", "left", "down");
 
 		// if (!keyPressed)
 		// sender.sendInstruction(0, 0);
@@ -333,7 +333,7 @@ public class SimpleARWithNXT extends SimpleApplication {
 
 	private void setPosition() {
 		// 5
-		pointTracker = new PointTracker(image);
+		pointTracker = new PointFinder(image);
 		ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 1);
 		ArrayList<Point> greenPoints = pointTracker.findPoints(green, 1);
 
