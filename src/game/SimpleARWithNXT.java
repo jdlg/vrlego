@@ -87,6 +87,7 @@ public class SimpleARWithNXT extends SimpleApplication {
 
 	@Override
 	public void simpleInitApp() {
+		//TODO superklasse: SimpleAR
 		// 3
 		cameraPicture.setWidth(settings.getWidth());
 		cameraPicture.setHeight(settings.getHeight());

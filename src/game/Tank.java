@@ -10,11 +10,9 @@ public class Tank extends Node {
 
 	private float x = 0, z = 0, angle = 0;
 	private Geometry geom;
-	private InstructionsSender sender;
 
-	public Tank(Geometry geom, InstructionsSender sender) {
+	public Tank(Geometry geom) {
 		this.geom = geom;
-		this.sender = sender;
 		attachChild(geom);
 	}
 
@@ -25,16 +23,10 @@ public class Tank extends Node {
 		updateXZA();
 	}
 	
-	//TODO find tank: To HSVranges som felt. finner to punkter som er nerme hverandre (HT som felt?)
-
 	private void updateXZA() {
 		setLocalTranslation(x, -12, z);
 		Quaternion rotation = new Quaternion();
 		rotation.fromAngles(0, angle, 0);
 		setLocalRotation(rotation);
-	}
-
-	public void preformInstruction(int rotation, int speed) {
-		sender.sendInstruction(rotation, speed);
 	}
 }

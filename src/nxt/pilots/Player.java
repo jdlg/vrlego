@@ -1,4 +1,4 @@
-package game.pilots;
+package nxt.pilots;
 
 import nxt.InstructionsSender;
 

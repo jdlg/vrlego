@@ -1,4 +1,4 @@
-package game.pilots;
+package nxt.pilots;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class PilotsManager {
 	private Player player;
 	private ArrayList<AI> AIList;
 	
-	public PilotsManager(InputManager inputManager, /*int numberOfPlayers,*/ int numberOfAIs) {
+	public PilotsManager(InputManager inputManager/*, int numberOfPlayers, int numberOfAIs*/) {
 		connectionFactory = new NXTConnectionFactory();
 		player = new Player(inputManager, connectionFactory.makeConnection());
 		// TODO Fill up AIList (AIFactory?)
