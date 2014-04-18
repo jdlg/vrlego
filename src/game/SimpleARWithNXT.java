@@ -287,26 +287,6 @@ public class SimpleARWithNXT extends SimpleApplication {
 
 	}
 
-	private void chessCalib() {
-		perspectiveChanger = Calibration.chessboardCalibration(capture, 5, 4,
-				4.1, 10, rvec, tvec);
-
-		double rx = rvec.get(0, 0)[0], ry = rvec.get(1, 0)[0], rz = rvec.get(2,
-				0)[0], tz = tvec.get(2, 0)[0], tx = tvec.get(0, 0)[0], ty = tvec
-				.get(1, 0)[0];
-
-		float[] angles = { (float) rx, (float) ry, (float) rz };
-
-		Transform tm = new Transform(new Vector3f((float) tx, (float) ty,
-				(float) tz), new Quaternion(angles));
-
-		Vector3f v0 = new Vector3f(0, 0, 0);
-		tm.transformInverseVector(v0, v0);
-		System.out.println(v0);
-
-		// cam2.setLocation(new Vector3f(camx, camy, camz));
-
-	}
 
 	@Override
 	public void simpleUpdate(float tpf) {
