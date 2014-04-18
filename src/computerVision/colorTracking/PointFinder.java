@@ -58,8 +58,8 @@ public class PointFinder {
 				grayMat);
 
 		// Reduce noise
-		// Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
-		// Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
+//		 Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
+//		 Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
 		Imgproc.blur(grayMat, grayMat, new Size(3, 3));
 
 		ArrayList<MatOfPoint> contours = new ArrayList<>();
