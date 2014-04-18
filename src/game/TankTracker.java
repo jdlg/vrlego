@@ -8,6 +8,4 @@ public class TankTracker {
 	private PointPoseTracker ppt;
 	private ArrayList<Tank> tankList;
 	private String[][] colorPairs;
-	
-	public 
 }
