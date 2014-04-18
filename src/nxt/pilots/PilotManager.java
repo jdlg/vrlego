@@ -6,15 +6,15 @@ import com.jme3.input.InputManager;
 
 import nxt.NXTConnectionFactory;
 
-public class PilotsManager {
+public class PilotManager {
 	
 	private NXTConnectionFactory connectionFactory;
 	private Player player;
 	private ArrayList<AI> AIList;
 	
-	public PilotsManager(InputManager inputManager/*, int numberOfPlayers, int numberOfAIs*/) {
+	public PilotManager(InputManager inputManager/*, int numberOfPlayers, int numberOfAIs*/) {
 		connectionFactory = new NXTConnectionFactory();
-		player = new Player(inputManager, connectionFactory.makeConnection());
+		player = new Player(inputManager, connectionFactory.makeConnection("usb"));
 		// TODO Fill up AIList (AIFactory?)
 	}
 

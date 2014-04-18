@@ -37,16 +37,10 @@ public class HomographyTransorm {
 		this.width = width;
 		this.heigth = heigth;
 		h = calculatePerspectiveTransform(points);
-		// System.out.println("h: " +h.dump());
 	}
 
 	private Mat calculatePerspectiveTransform(ArrayList<Point> points) {
 		ArrayList<Point> toPoints = new ArrayList<>();
-		// toPoints.add(new Point(0, 0));
-		// toPoints.add(new Point(width, 0));
-		// toPoints.add(new Point(width, heigth));
-		// toPoints.add(new Point(0, heigth));
-		System.out.println(width + " " + heigth);
 		toPoints.add(new Point(-width / 2, -heigth / 2));
 		toPoints.add(new Point(width / 2, -heigth / 2));
 		toPoints.add(new Point(width / 2, heigth / 2));

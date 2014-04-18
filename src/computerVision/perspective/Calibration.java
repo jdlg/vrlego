@@ -39,9 +39,8 @@ public class Calibration {
 	 * @param pc
 	 *            Output HomographyTransform
 	 */
-	public static HomographyTransorm chessboardCalibration(
-			VideoReader reader, int cols, int rows, double squareSize,
-			int reads, Mat rvec, Mat tvec) {
+	public static HomographyTransorm chessboardCalibration(VideoReader reader,
+			int cols, int rows, double squareSize, int reads, Mat rvec, Mat tvec) {
 
 		// TODO check parameters + update doc
 
@@ -58,7 +57,6 @@ public class Calibration {
 		// Find the chess board [reads] amount of times
 		ArrayList<MatOfPoint2f> realPointsList = new ArrayList<>();
 		System.out.println("Looking for chessboard patern");
-		// System.out.println();
 		for (int i = 0; i < reads;) {
 			image = reader.read();
 			MatOfPoint2f chessPoints = new MatOfPoint2f();
@@ -67,7 +65,7 @@ public class Calibration {
 			if (found) {
 				realPointsList.add(chessPoints);
 				i++;
-				// System.out.println("found " + (i));
+				System.out.println("found " + i + "/" + reads);
 			}
 		}
 

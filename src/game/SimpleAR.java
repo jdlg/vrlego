@@ -57,7 +57,6 @@ public class SimpleAR extends SimpleApplication {
 		SimpleAR app = new SimpleAR();
 		app.setShowSettings(false);
 		app.start();
-
 	}
 
 	@Override
@@ -138,11 +137,6 @@ public class SimpleAR extends SimpleApplication {
 
 		float[] angles2 = { (float) (rx - pi * 4 / 8), (float) (ry - pi * 1),
 				(float) (rz - pi * 0) };
-
-		for (int i = 0; i < angles2.length; i++) {
-			System.out.print(angles2[i] + " ");
-		}
-		System.out.println();
 
 		cam2.setLocation(new Vector3f(camPose.getX(), camPose.getZ(), -camPose
 				.getY()));
