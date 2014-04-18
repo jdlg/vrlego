@@ -33,11 +33,11 @@ import com.jme3.texture.plugins.AWTLoader;
 import com.jme3.ui.Picture;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 import computerVision.perspective.Calibration;
 import computerVision.perspective.PerspectiveCalibration;
 import computerVision.perspective.HomographyTransorm;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
 import computerVision.utils.MatConvert;
 
 public class SimpleARWithNXT extends SimpleApplication {
@@ -126,9 +126,9 @@ public class SimpleARWithNXT extends SimpleApplication {
 		viewPort2.attachScene(rootNode);
 
 		blue = HSVRangeSerialization.unserialize("blue");
-		red = HSVRangeSerialization.unserialize("red");
+//		red = HSVRangeSerialization.unserialize("red");
 		yellow = HSVRangeSerialization.unserialize("yellow");
-		green = HSVRangeSerialization.unserialize("green");
+//		green = HSVRangeSerialization.unserialize("green");
 
 		setPosition();
 		// 8

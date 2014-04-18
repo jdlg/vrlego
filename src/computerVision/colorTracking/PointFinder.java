@@ -1,4 +1,4 @@
-package computerVision.tracking;
+package computerVision.colorTracking;
 
 import java.util.ArrayList;
 import java.util.Arrays;

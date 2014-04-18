@@ -20,9 +20,9 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import computerVision.Global;
+import computerVision.colorTracking.HSVRange;
 import computerVision.gui.BGRMatPanel;
 import computerVision.gui.GrayMatPanel;
-import computerVision.tracking.HSVRange;
 import computerVision.video.VideoReader;
 
 public class ColorCalibrationPanel{

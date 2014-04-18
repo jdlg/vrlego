@@ -20,10 +20,10 @@ import computerVision.Global;
 import computerVision.colorCalibration.ColorCalibrationPanel;
 import computerVision.colorCalibration.HSVRangeSerialization;
 import computerVision.colorCalibration.ManualColorCalibration;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 import computerVision.gui.BGRMatPanel;
 import computerVision.gui.GrayMatPanel;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class TrackingTestProgram2 {
@@ -39,21 +39,21 @@ public class TrackingTestProgram2 {
 		Mat image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
-		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
 
 		/*
+		 * final HSVRange red = HSVRangeSerialization.unserialize("red");
 		 * final HSVRange green = HSVRangeSerialization.unserialize("green");
 		 * final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
 		 */
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
-			PointFinder pointTracker = new PointFinder(mat);;
+			PointFinder pointFinder = new PointFinder(mat);;
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.setColor(Color.black);
-				ArrayList<Point> points = pointTracker.findPoints(blue, 99);
+				ArrayList<Point> points = pointFinder.findPoints(blue, 99);
 				System.out.println(points.size());
 				for (Point p : points) {
 					g.drawRect((int) p.x - 5, (int) p.y - 5, 10, 10);

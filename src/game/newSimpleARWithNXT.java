@@ -33,11 +33,11 @@ import com.jme3.texture.plugins.AWTLoader;
 import com.jme3.ui.Picture;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 import computerVision.perspective.Calibration;
 import computerVision.perspective.PerspectiveCalibration;
 import computerVision.perspective.HomographyTransorm;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
 import computerVision.utils.MatConvert;
 
 public class newSimpleARWithNXT extends SimpleApplication {

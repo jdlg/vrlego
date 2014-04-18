@@ -6,8 +6,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 
 public class PerspectiveCalibration {
 

@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.tracking.HSVRange;
+import computerVision.colorTracking.HSVRange;
 
 public class HSVRangeSerializationTest {
 
@@ -25,6 +25,7 @@ public class HSVRangeSerializationTest {
 		new File(HSVRangeSerialization.getFilePath("test")).delete();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void test() {
 		double[] min = { 10.0, 20.0, 40.0 };

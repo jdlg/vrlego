@@ -1,13 +1,18 @@
 package computerVision.colorCalibration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import computerVision.tracking.HSVRange;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.HSVRangeSet;
+
+import java.lang.String;
 
 public class HSVRangeSerialization {
 	
@@ -31,6 +36,7 @@ public class HSVRangeSerialization {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(path + color + ".ser");
+//			System.out.println(path + color + ".ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			HSVRange range = (HSVRange) ois.readObject();
 			ois.close();
@@ -45,6 +51,25 @@ public class HSVRangeSerialization {
 		return null;
 	}
 
+	public static HSVRangeSet unserializeSet(){
+		HSVRangeSet set = new HSVRangeSet();
+		File folder = new File(path);
+		FilenameFilter nameFilter = new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".ser");
+			}
+		};
+		File[] files = folder.listFiles(nameFilter);
+		
+		for (int i = 0; i < files.length; i++) {
+			String name = files[i].getName().substring(0, files[i].getName().length()-4);
+			set.put(name, unserialize(name));
+		}
+		
+		return set;
+	};
+	
 	public static String getFilePath(String color) {
 		return path + color + ".ser";
 	}

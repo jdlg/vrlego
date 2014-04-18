@@ -14,9 +14,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 import computerVision.gui.BGRMatPanel;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class TrackingTestProgram {
@@ -35,23 +35,24 @@ public class TrackingTestProgram {
 		new Thread(reader).start();
 		// final HSVRange green = HSVRangeSerialization.unserialize("green");
 		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
-		final HSVRange red = HSVRangeSerialization.unserialize("red");
+//		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
-		final PointFinder pointTracker = new PointFinder(image);
+		final PointFinder pointFinder = new PointFinder(image);
 
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				pointTracker.uppdateImage(mat);
+				pointFinder.uppdateImage(mat);
 				g.setColor(Color.black);
 				// for (Point p : new PointTracker(mat, this)
 				// .findePoints(green, 2)) {
 				// g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 				// g.drawString("green", (int) p.x + 12, (int) p.y + 12);
 				// }
-				for (Point p : pointTracker.findPoints(blue, 4)) {
+//				System.out.println(blue.string());
+				for (Point p : pointFinder.findPoints(blue, 4)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
 					//System.out.println(p.x + " " + p.y);
@@ -62,7 +63,7 @@ public class TrackingTestProgram {
 //					g.drawString("red", (int) p.x + 12, (int) p.y + 12);
 //
 //				}
-				for (Point p : pointTracker.findPoints(yellow, 1)) {
+				for (Point p : pointFinder.findPoints(yellow, 1)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("yellow", (int) p.x + 12, (int) p.y + 12);
 				}

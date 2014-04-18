@@ -7,7 +7,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-import computerVision.tracking.HSVRange;
+import computerVision.colorTracking.HSVRange;
 
 public class MatConvert {
 

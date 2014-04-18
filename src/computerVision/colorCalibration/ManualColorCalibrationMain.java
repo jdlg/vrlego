@@ -19,8 +19,8 @@ import javax.swing.event.ChangeListener;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
+import computerVision.colorTracking.HSVRange;
 import computerVision.gui.GrayMatPanel;
-import computerVision.tracking.HSVRange;
 import computerVision.video.VideoReader;
 
 public class ManualColorCalibrationMain {

@@ -1,11 +1,19 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import computerVision.tracking.PointPoseTracker;
+import org.opencv.core.Point;
+
+import computerVision.colorTracking.PointPoseTracker;
 
 public class TankTracker {
 	private PointPoseTracker ppt;
-	private ArrayList<Tank> tankList;
-	private String[][] colorPairs;
+	private Tank tank;
+//	private ArrayList<Tank> tankList;
+	
+	public void setTankPosition() {
+		HashMap<String, ArrayList<Point>> pointPose;
+		pointPose = ppt.findPoints();
+	}
 }

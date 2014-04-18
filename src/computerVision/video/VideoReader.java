@@ -29,6 +29,15 @@ public class VideoReader implements Runnable {
 		capture.read(this.imageMat);
 		// TODO ?
 	}
+	
+	public Mat getImage() {
+		return imageMat;
+	}
+	
+	public Mat read(){
+		capture.read(imageMat);
+		return imageMat;
+	};
 
 	@Override
 	public void run() {
@@ -40,10 +49,6 @@ public class VideoReader implements Runnable {
 					e.printStackTrace();
 				}
 				capture.read(imageMat);
-//				MatOfPoint2f points = new MatOfPoint2f();
-//				Calib3d.findChessboardCorners(imageMat, new Size(5,4), points);
-//				Calib3d.drawChessboardCorners(imageMat, new Size(5,4), points,
-//						true);
 			}
 		}
 	}

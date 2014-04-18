@@ -13,13 +13,15 @@ import org.opencv.core.Point3;
 import org.opencv.core.Size;
 import org.opencv.highgui.VideoCapture;
 
+import computerVision.video.VideoReader;
+
 public class Calibration {
 
 	// TODO defaults
 	/**
 	 * Looks for a chessboard pattern to calculate the camera extrinsic values
 	 * 
-	 * @param capture
+	 * @param reader
 	 *            The video source
 	 * @param cols
 	 *            Columns in the chessboard pattern
@@ -38,16 +40,16 @@ public class Calibration {
 	 *            Output HomographyTransform
 	 */
 	public static HomographyTransorm chessboardCalibration(
-			VideoCapture capture, int cols, int rows, double squareSize,
+			VideoReader reader, int cols, int rows, double squareSize,
 			int reads, Mat rvec, Mat tvec) {
 
 		// TODO check parameters + update doc
 
 		Mat image = new Mat();
-		capture.read(image);
-		capture.read(image);
-		capture.read(image);
-		capture.read(image);
+		reader.read();
+		reader.read();
+		reader.read();
+		reader.read();
 
 		cols--;
 		rows--;
@@ -58,7 +60,7 @@ public class Calibration {
 		System.out.println("Looking for chessboard patern");
 		// System.out.println();
 		for (int i = 0; i < reads;) {
-			capture.read(image);
+			image = reader.read();
 			MatOfPoint2f chessPoints = new MatOfPoint2f();
 			boolean found = Calib3d.findChessboardCorners(image, new Size(rows,
 					cols), chessPoints);

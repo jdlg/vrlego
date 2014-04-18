@@ -26,7 +26,7 @@ public class HomographyTransorm {
 	 *            quadrilateral
 	 */
 	public HomographyTransorm(ArrayList<Point> points) {
-		//TODO 4 POINTS?
+		// TODO 4 POINTS?
 		width = 100;
 		heigth = 100;
 		h = calculatePerspectiveTransform(points);
@@ -37,7 +37,7 @@ public class HomographyTransorm {
 		this.width = width;
 		this.heigth = heigth;
 		h = calculatePerspectiveTransform(points);
-		//System.out.println("h: " +h.dump());
+		// System.out.println("h: " +h.dump());
 	}
 
 	private Mat calculatePerspectiveTransform(ArrayList<Point> points) {
@@ -71,21 +71,24 @@ public class HomographyTransorm {
 
 	public ArrayList<Point> applyTransform(ArrayList<Point> points) {
 
-		Mat pointMat = Converters.vector_Point_to_Mat(points);
-		pointMat.convertTo(pointMat, CvType.CV_32FC2);
+		if (points.size() > 0) {
+			Mat pointMat = Converters.vector_Point_to_Mat(points);
+			pointMat.convertTo(pointMat, CvType.CV_32FC2);
 
-		Core.perspectiveTransform(pointMat, pointMat, h);
+			Core.perspectiveTransform(pointMat, pointMat, h);
 
-		ArrayList<Point> results = new ArrayList<Point>();
-		Converters.Mat_to_vector_Point(pointMat, results);
+			ArrayList<Point> results = new ArrayList<Point>();
+			Converters.Mat_to_vector_Point(pointMat, results);
 
-		return results;
-	}	
-	
+			return results;
+		}
+		return points;
+	}
+
 	public Point applyTransform(Point point) {
 		ArrayList<Point> points = new ArrayList<>();
 		points.add(point);
-		
+
 		Mat pointMat = Converters.vector_Point_to_Mat(points);
 		pointMat.convertTo(pointMat, CvType.CV_32FC2);
 

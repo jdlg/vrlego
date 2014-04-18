@@ -12,9 +12,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import computerVision.colorCalibration.HSVRangeSerialization;
+import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.PointFinder;
 import computerVision.perspective.HomographyTransorm;
-import computerVision.tracking.HSVRange;
-import computerVision.tracking.PointFinder;
 import computerVision.video.VideoReader;
 
 public class HomographyTestProgram {
@@ -22,8 +22,6 @@ public class HomographyTestProgram {
 	public static void main(String[] args) {
 
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-
-		// les fra kamera og start thread
 		final Mat image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
