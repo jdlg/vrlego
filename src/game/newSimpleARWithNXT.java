@@ -40,7 +40,7 @@ import computerVision.tracking.HSVRange;
 import computerVision.tracking.PointFinder;
 import computerVision.utils.MatConvert;
 
-public class SimpleARWithNXT extends SimpleApplication {
+public class newSimpleARWithNXT extends SimpleApplication {
 
 	// TODO rydd opp
 	private static VideoCapture capture;
@@ -56,6 +56,7 @@ public class SimpleARWithNXT extends SimpleApplication {
 	double chessz;
 	Tank center;
 	static InstructionsSender sender;
+	static TankTracker tankTracker;
 
 	// private static double xa = 0;
 
@@ -79,7 +80,7 @@ public class SimpleARWithNXT extends SimpleApplication {
 		rvec = new Mat();
 		tvec = new Mat();
 
-		SimpleARWithNXT app = new SimpleARWithNXT();
+		newSimpleARWithNXT app = new newSimpleARWithNXT();
 		app.setShowSettings(false);
 		app.start();
 
@@ -131,12 +132,12 @@ public class SimpleARWithNXT extends SimpleApplication {
 
 		setPosition();
 		// 8
-		chessCalib2();
+		chessCalib();
 
 		ActionListener actionListener = new ActionListener() {
 			public void onAction(String name, boolean keyPressed, float tpf) {
 				if (name.equals("chessCalib") && keyPressed) {
-					chessCalib2();
+					chessCalib();
 				}
 			}
 		};
@@ -205,7 +206,7 @@ public class SimpleARWithNXT extends SimpleApplication {
 
 	}
 
-	private void chessCalib2() {
+	private void chessCalib() {
 		perspectiveChanger = Calibration.chessboardCalibration(capture, 5, 4,
 				4.1, 10, rvec, tvec);
 
@@ -271,26 +272,10 @@ public class SimpleARWithNXT extends SimpleApplication {
 	}
 
 	private void setPosition() {
-		// 5
-		pointTracker = new PointFinder(image);
-		ArrayList<Point> bluePoints = pointTracker.findPoints(blue, 1);
-		ArrayList<Point> greenPoints = pointTracker.findPoints(green, 1);
-
-		Point bluePoint = new Point(0, 0);
-		if (bluePoints.size() > 0) {
-			bluePoint = perspectiveChanger.applyTransform(bluePoints).get(0);
-		}
-		Point greenPoint = new Point(0, 0);
-		if (greenPoints.size() > 0) {
-			greenPoint = perspectiveChanger.applyTransform(greenPoints).get(0);
-		}
-		float angle = (float) computerVision.Geometry.calculateAngle(bluePoint,
-				greenPoint);
-		Point midPint = new Point((bluePoint.x + greenPoint.x) / 2,
-				(bluePoint.y + greenPoint.y) / 2);
-
-		tanx.setXZA(-(float) (midPint.x - tx * 0) * 1,
-				(float) (midPint.y + chessz * 0), angle);
+		// 5 
+		tankTracker.setTankPosition();
+//		tanx.setXZA(-(float) (midPint.x - tx * 0) * 1,
+//				(float) (midPint.y + chessz * 0), angle);
 		// tanx.setXZA(0, 0, 0);
 
 	}

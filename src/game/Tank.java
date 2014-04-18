@@ -9,12 +9,15 @@ import com.jme3.scene.Node;
 public class Tank extends Node {
 
 	private float x = 0, z = 0, angle = 0;
-	private Geometry geom;
-	private InstructionsSender sender;
+	private String color1, color2;
 
-	public Tank(Geometry geom, InstructionsSender sender) {
-		this.geom = geom;
-		this.sender = sender;
+	public Tank(Geometry geom) {
+		this(geom, "blue", "yellow");
+	}
+
+	public Tank(Geometry geom, String color1, String color2) {
+		this.color1 = color1;
+		this.color2 = color2;
 		attachChild(geom);
 	}
 
@@ -24,17 +27,11 @@ public class Tank extends Node {
 		angle = a;
 		updateXZA();
 	}
-	
-	//TODO find tank: To HSVranges som felt. finner to punkter som er nerme hverandre (HT som felt?)
 
 	private void updateXZA() {
 		setLocalTranslation(x, -12, z);
 		Quaternion rotation = new Quaternion();
 		rotation.fromAngles(0, angle, 0);
 		setLocalRotation(rotation);
-	}
-
-	public void preformInstruction(int rotation, int speed) {
-		sender.sendInstruction(rotation, speed);
 	}
 }
