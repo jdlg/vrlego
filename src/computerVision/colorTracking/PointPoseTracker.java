@@ -13,6 +13,7 @@ import computerVision.video.VideoReader;
 public class PointPoseTracker extends PointTracker {
 
 	private HomographyTransorm ht;
+	
 
 	public PointPoseTracker(VideoReader reader, HomographyTransorm ht) {
 		super(reader);

@@ -20,7 +20,7 @@ public class Tank extends Node {
 		this.color1 = color1;
 		this.color2 = color2;
 		attachChild(geom);
-		scale(20f);
+		scale(10f);
 	}
 
 	public void setXZA(float x, float z, float a) {
@@ -31,7 +31,8 @@ public class Tank extends Node {
 	}
 
 	private void updateXZA() {
-		setLocalTranslation(x, -12, z);
+//		setLocalTranslation(x, -12, z);
+		setLocalTranslation(x, 0, z);
 		Quaternion rotation = new Quaternion();
 		rotation.fromAngles(0, angle, 0);
 		setLocalRotation(rotation);

@@ -51,6 +51,8 @@ public class SimpleAR extends SimpleApplication {
 	private Camera cam2;
 	private TankTracker tankTracker;
 	private VideoReader videoReader;
+	private ArrayList<Tank> tankList;
+	private float scale = 1f;
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -87,18 +89,16 @@ public class SimpleAR extends SimpleApplication {
 		// 8
 		image = new Mat();
 		videoReader = new VideoReader(image, 0);
-		chessCalib();
-
+		
 		TankFactory tankFactory = new TankFactory(assetManager);
-		ArrayList<Tank> tankList = tankFactory.makeTankList(1);
+		tankList = tankFactory.makeTankList(1);
 		for (Tank tank : tankList) {
 			rootNode.attachChild(tank);
 		}
 
-		PointPoseTracker ppt = new PointPoseTracker(videoReader,
-				homographyTransorm);
-		tankTracker = new TankTracker(tankList.get(0), ppt);
+		chessCalib();
 
+		
 		setBackground();
 
 		ActionListener actionListener = new ActionListener() {
@@ -111,37 +111,44 @@ public class SimpleAR extends SimpleApplication {
 		inputManager.addMapping("chessCalib",
 				new KeyTrigger(KeyInput.KEY_SPACE));
 		inputManager.addListener(actionListener, "chessCalib");
-
-		// 13
-		// pilot
-
+		
+		rootNode.scale(scale);
 	}
 
 	private void chessCalib() {
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
-				4, 4.1, 10, rvec, tvec);
+				4, 4.1, 1, rvec, tvec);
+		
+		PointPoseTracker ppt = new PointPoseTracker(videoReader,
+				homographyTransorm);
+		tankTracker = new TankTracker(tankList.get(0), ppt);
 
 		double pi = Math.PI, rx = rvec.get(0, 0)[0], ry = rvec.get(1, 0)[0], rz = rvec
 				.get(2, 0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
 				.get(2, 0)[0];
 
+//		System.out.println(ry);
+		rz = 0;
+		ry = 0;
+
 		float[] angles = { (float) rx, (float) ry, (float) rz };
 		Quaternion rotation = new Quaternion(angles);
 
-		Transform tm = new Transform(new Vector3f((float) tx, (float) ty,
+		Transform tm = new Transform(new Vector3f((float) tx * 1, (float) ty,
 				(float) tz), rotation);
 
 		Vector3f camPose = new Vector3f(0, 0, 0);
 		tm.transformInverseVector(camPose, camPose);
 
-		float[] angles2 = { (float) (rx - pi * 4 / 8), (float) (ry - pi * 1),
-				(float) (rz - pi * 0) };
+		float[] angles2 = { (float) (rx - pi * 4 / 8), (float) (ry - pi),
+				(float) (rz) };
 
 		cam2.setLocation(new Vector3f(camPose.getX(), camPose.getZ(), -camPose
 				.getY()));
 		rotation = new Quaternion(angles2);
 		cam2.setRotation(rotation);
+//		cam2.setFrustumPerspective(60, 640 / 480, 1, 1000);
 		// cam2.lookAt(new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
 	}
 
