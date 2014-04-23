@@ -12,10 +12,9 @@ import game.Joystick;
 
 public class PlayerToNXT extends JFrame implements KeyListener {
 
-	private static int x = 0, y = 0;
+	private static int x = 0, y = 0, topvalue = 31;
 	private static boolean u = false, d = false, l = false, r = false;
 	private static InstructionsSender sender;
-//	private static Joystick stick = new Joystick();
 
 	public PlayerToNXT() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,25 +28,10 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 		PlayerToNXT frame = new PlayerToNXT();
 		frame.setVisible(true);
 		frame.pack();
-//		start();
-	}
-
-	private static void start() {
-		while (true) {
-			try {
-				Thread.sleep(15);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if (!u && !d && !l && !r) {
-//				x=(int)(stick.getX()*31);
-//				y=(int)(stick.getY()*31);
-			}
-			sender.sendInstruction(x, y);
-		}
 	}
 
 	class controlsPanel extends JPanel {
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -61,13 +45,13 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 		x = 0;
 		y = 0;
 		if (u)
-			y -= 31;
+			y -= topvalue;
 		if (d)
-			y += 31;
+			y += topvalue;
 		if (l)
-			x -= 31;
+			x -= topvalue;
 		if (r)
-			x += 31;
+			x += topvalue;
 		repaint();
 		sender.sendInstruction(x, y);
 	}
@@ -75,35 +59,39 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_UP)
-			u = true;
-		if (code == KeyEvent.VK_DOWN)
-			d = true;
-		if (code == KeyEvent.VK_LEFT)
-			l = true;
-		if (code == KeyEvent.VK_RIGHT)
-			r = true;
-		utdateXY();
+		if (code == KeyEvent.VK_ESCAPE) {
+			sender.close();
+			System.exit(0);
+		} else {
+			if (code == KeyEvent.VK_UP)
+				u = true;
+			if (code == KeyEvent.VK_DOWN)
+				d = true;
+			if (code == KeyEvent.VK_LEFT)
+				l = true;
+			if (code == KeyEvent.VK_RIGHT)
+				r = true;
+			utdateXY();
+		}
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_UP)
-			u = false;
-		if (code == KeyEvent.VK_DOWN)
-			d = false;
-		if (code == KeyEvent.VK_LEFT)
-			l = false;
-		if (code == KeyEvent.VK_RIGHT)
-			r = false;
-		utdateXY();
+		if (code != KeyEvent.VK_ESCAPE) {
+			if (code == KeyEvent.VK_UP)
+				u = false;
+			if (code == KeyEvent.VK_DOWN)
+				d = false;
+			if (code == KeyEvent.VK_LEFT)
+				l = false;
+			if (code == KeyEvent.VK_RIGHT)
+				r = false;
+			utdateXY();
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-
 	}
 }

@@ -8,7 +8,7 @@ public class NXTConnectionFactory {
 	 * Connects to the first found NXT
 	 * 
 	 * @param connectionType
-	 *            Supported types
+	 *            Supported types:
 	 *            <ul>
 	 *            <li>"usb"</li>
 	 *            <li>"btspp"</li>

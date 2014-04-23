@@ -16,13 +16,21 @@ import lejos.pc.comm.NXTConnector;
 public class InstructionsSender {
 
 	private DataOutputStream dos;
+	private int precision = 255;
 
 	public InstructionsSender(String deviceURL) {
+		// TODO improve. loop: retry in stead of exit
 		NXTConnector connector = new NXTConnector();
-		if (!connector.connectTo(deviceURL)) {
-			System.out.println("Not connected");
-			System.exit(0);
+		// if (!connector.connectTo(deviceURL)) {
+		// System.out.println("Not connected");
+		// System.exit(0);
+		// }
+
+		System.out.println("Looking for NXT");
+		while (!connector.connectTo(deviceURL)) {
 		}
+		System.out.println("NXT connected");
+
 		dos = new DataOutputStream(connector.getOutputStream());
 	}
 
@@ -36,6 +44,7 @@ public class InstructionsSender {
 	}
 
 	public void sendInstruction(int x, int y) {
+		// TODO bruke et annet tall enn 32 (255?)
 		try {
 			dos.writeInt((x + 32) * 64 + y + 32);
 			dos.flush();
@@ -48,6 +57,7 @@ public class InstructionsSender {
 
 	public void close() {
 		try {
+			dos.writeInt(100000);
 			dos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
