@@ -31,11 +31,9 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 	}
 
 	class controlsPanel extends JPanel {
-
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			// System.out.println(x + " " + y);
 			g.drawRect(10, 10, 63, 63);
 			g.fillOval(10 + 31 + x - 5, 10 + 31 - y - 5, 10, 10);
 		}
