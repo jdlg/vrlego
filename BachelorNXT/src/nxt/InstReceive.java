@@ -16,7 +16,6 @@ import lejos.nxt.comm.USBConnection;
  */
 public class InstReceive {
 	
-	static int precision = 255;
 	static DataInputStream dis;
 	static boolean connected = false;
 	
@@ -55,8 +54,8 @@ public class InstReceive {
 				preformeInstructions(0, 0);
 				connected = false;
 			}else{
-				int x = inst / 64 - 32;
-				int y = inst % 64 - 32;
+				int x = inst / 512 - 256;
+				int y = inst % 512 - 256;
 				preformeInstructions(x, y);
 			}
 		}
@@ -67,8 +66,8 @@ public class InstReceive {
 			LCD.clear();
 			LCD.drawString("Recived " + x + " " + y, 0, 0);
 			LCD.refresh();
-			int v = y * 20;
-			int r = x * 10;
+			int v = y * 2;
+			int r = x * 1;
 			if (v>0) r *= -1;
 			int aspeed = v + r;
 			int bspeed = v - r;

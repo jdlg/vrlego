@@ -46,13 +46,13 @@ public class InstructionsSender {
 	public void sendInstruction(int x, int y) {
 		// TODO bruke et annet tall enn 32 (255?)
 		try {
-			dos.writeInt((x + 32) * 64 + y + 32);
+			dos.writeInt((x + 256) * 512 + y + 256);
+//			dos.writeInt((128 + 128) * 256 + 0 + 128);
 			dos.flush();
 			System.out.println("sendt " + x + " " + y);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void close() {

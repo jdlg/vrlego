@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,16 +14,48 @@ import game.Joystick;
 
 public class PlayerToNXT extends JFrame implements KeyListener {
 
-	private static int x = 0, y = 0, topvalue = 31;
-	private static boolean u = false, d = false, l = false, r = false;
-	private static InstructionsSender sender;
+	private int x = 0, y = 0, topvalue = 255, squareWidth = 255;
+	private boolean u = false, d = false, l = false, r = false;
+	private InstructionsSender sender;
 
 	public PlayerToNXT() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setContentPane(new controlsPanel());
+		controlsPanel cp = new controlsPanel();
+		cp.setPreferredSize(new Dimension(squareWidth + 20, squareWidth + 20));
+		setContentPane(cp);
 		addKeyListener(this);
-		setPreferredSize(new Dimension(100, 120));
 		sender = new InstructionsSender("usb://");
+		addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				sender.close();
+			}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+			}
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+			}
+		});
 	}
 
 	public static void main(String[] args) {
@@ -34,8 +68,8 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawRect(10, 10, 63, 63);
-			g.fillOval(10 + 31 + x - 5, 10 + 31 - y - 5, 10, 10);
+			g.drawRect(10, 10, squareWidth, squareWidth);
+			g.fillOval(10 + squareWidth/2 + x/2 - 5, 10 + squareWidth/2 + y/2 - 5, 10, 10);
 		}
 	}
 
