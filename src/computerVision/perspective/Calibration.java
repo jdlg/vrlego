@@ -3,7 +3,6 @@ package computerVision.perspective;
 import java.util.ArrayList;
 
 import org.opencv.calib3d.Calib3d;
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
@@ -11,10 +10,7 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.MatOfPoint3f;
 import org.opencv.core.Point;
 import org.opencv.core.Point3;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.highgui.VideoCapture;
-import org.opencv.utils.Converters;
 
 import computerVision.video.VideoReader;
 
@@ -44,7 +40,6 @@ public class Calibration {
 	 */
 	public static HomographyTransorm chessboardCalibration(VideoReader reader,
 			int cols, int rows, double squareSize, int reads, Mat rvec, Mat tvec) {
-
 		// TODO check parameters + update doc
 
 		Mat image = new Mat();
@@ -106,8 +101,18 @@ public class Calibration {
 		flatPoints.fromList(flatPointsArray);
 
 		// Find rvec and tvec
-		double W = image.width(), H = image.height(), fl = H * 1.57; // TODO fl?
-		Mat cameraMatrix = new Mat(3, 3, CvType.CV_64F);
+		ArrayList<MatOfPoint3f> objectPoints = new ArrayList<>();
+		objectPoints.add(flatPoints);
+		ArrayList<MatOfPoint2f> imagePoints = new ArrayList<>();
+		imagePoints.add(avgPoints);
+
+		// TODO find camera intrinsics automatically, as opposed to hard coding
+		double W = image.width(), H = image.height(), fl = H * 1.57;
+		Mat cameraMatrix
+		// =Calib3d.initCameraMatrix2D(objectPoints,
+		// imagePoints, new Size(image.width(), image.height()));
+		= new Mat(3, 3, CvType.CV_64F);
+
 		cameraMatrix.put(0, 0, fl, 0, W / 2, 0, fl, H / 2, 0, 0, 1);
 		Calib3d.solvePnP(flatPoints, avgPoints, cameraMatrix,
 				new MatOfDouble(), rvec, tvec);
@@ -122,20 +127,7 @@ public class Calibration {
 		HomographyTransorm ht = new HomographyTransorm(corners, (cols - 1)
 				* squareSize, (rows - 1) * squareSize);
 
-		//
-		// Mat r = new Mat();
-		// Calib3d.Rodrigues(rvec, r);
-		//
-		// Mat at = Mat.ones(4, 4, CvType.CV_64F);
-		//
-		// for (int i = 0; i < 3; i++) {
-		// at.put(i, 0, r.get(0, i)[0], r.get(1, i)[0], r.get(2, i)[0]);
-		// at.put(i, 3, tvec.get(i, 0)[0]);
-		// }
-		// Mat point = Mat.ones(1, 4, CvType.CV_64F);
-		// Mat point2 = new Mat();
-		// Core.gemm(point, at, 1, new Mat(), 0,point2 , 0);
-		// System.out.println(point2.dump());
+		System.out.println(tvec.get(2, 0)[0]);
 
 		return ht;
 	}

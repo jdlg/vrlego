@@ -55,10 +55,6 @@ public class ChessTestProgram {
 				Calib3d.drawChessboardCorners(image, new Size(w, h),
 						chssPoints, found);
 				if (found) {
-					// System.out.println(chssPoints.dump());
-//					ArrayList<MatOfPoint2f> iList = new ArrayList<>();
-//					iList.add(chssPoints);
-
 					ArrayList<Point3> pointList = new ArrayList<>();
 					for (int i = 0; i < h; i++) {
 						for (int j = 0; j < w; j++) {

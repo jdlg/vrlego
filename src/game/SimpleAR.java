@@ -118,7 +118,7 @@ public class SimpleAR extends SimpleApplication {
 	private void chessCalib() {
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
-				4, 4.1, 1, rvec, tvec);
+				4, 4.1, 10, rvec, tvec);
 		
 		PointPoseTracker ppt = new PointPoseTracker(videoReader,
 				homographyTransorm);
