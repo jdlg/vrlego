@@ -20,4 +20,10 @@ public class SimpleARWithNXT extends SimpleAR {
 		pilotManager = new PilotManager(inputManager);
 	}
 	
+	@Override
+	public void destroy() {
+		pilotManager.closeAll();
+		super.destroy();
+	}
+	
 }

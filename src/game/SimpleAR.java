@@ -89,7 +89,7 @@ public class SimpleAR extends SimpleApplication {
 		// 8
 		image = new Mat();
 		videoReader = new VideoReader(image, 0);
-		
+
 		TankFactory tankFactory = new TankFactory(assetManager);
 		tankList = tankFactory.makeTankList(1);
 		for (Tank tank : tankList) {
@@ -98,7 +98,6 @@ public class SimpleAR extends SimpleApplication {
 
 		chessCalib();
 
-		
 		setBackground();
 
 		ActionListener actionListener = new ActionListener() {
@@ -111,7 +110,7 @@ public class SimpleAR extends SimpleApplication {
 		inputManager.addMapping("chessCalib",
 				new KeyTrigger(KeyInput.KEY_SPACE));
 		inputManager.addListener(actionListener, "chessCalib");
-		
+
 		rootNode.scale(scale);
 	}
 
@@ -119,7 +118,7 @@ public class SimpleAR extends SimpleApplication {
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
 				4, 4.1, 1, rvec, tvec);
-		
+
 		PointPoseTracker ppt = new PointPoseTracker(videoReader,
 				homographyTransorm);
 		tankTracker = new TankTracker(tankList.get(0), ppt);
@@ -128,7 +127,7 @@ public class SimpleAR extends SimpleApplication {
 				.get(2, 0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
 				.get(2, 0)[0];
 
-//		System.out.println(ry);
+		// System.out.println(ry);
 		rz = 0;
 		ry = 0;
 
@@ -148,7 +147,7 @@ public class SimpleAR extends SimpleApplication {
 				.getY()));
 		rotation = new Quaternion(angles2);
 		cam2.setRotation(rotation);
-//		cam2.setFrustumPerspective(60, 640 / 480, 1, 1000);
+		// cam2.setFrustumPerspective(60, 640 / 480, 1, 1000);
 		// cam2.lookAt(new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
 	}
 
@@ -178,4 +177,9 @@ public class SimpleAR extends SimpleApplication {
 		tankTracker.updatePositions();
 	}
 
+	@Override
+	public void destroy() {
+		videoReader.close();
+		super.destroy();
+	}
 }

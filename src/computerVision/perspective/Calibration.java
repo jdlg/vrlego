@@ -122,21 +122,6 @@ public class Calibration {
 		HomographyTransorm ht = new HomographyTransorm(corners, (cols - 1)
 				* squareSize, (rows - 1) * squareSize);
 
-		//
-		// Mat r = new Mat();
-		// Calib3d.Rodrigues(rvec, r);
-		//
-		// Mat at = Mat.ones(4, 4, CvType.CV_64F);
-		//
-		// for (int i = 0; i < 3; i++) {
-		// at.put(i, 0, r.get(0, i)[0], r.get(1, i)[0], r.get(2, i)[0]);
-		// at.put(i, 3, tvec.get(i, 0)[0]);
-		// }
-		// Mat point = Mat.ones(1, 4, CvType.CV_64F);
-		// Mat point2 = new Mat();
-		// Core.gemm(point, at, 1, new Mat(), 0,point2 , 0);
-		// System.out.println(point2.dump());
-
 		return ht;
 	}
 }

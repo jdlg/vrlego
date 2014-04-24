@@ -8,4 +8,8 @@ public abstract class Pilot {
 	protected void drive(int rotation, int speed) {
 		sender.sendInstruction(rotation, speed);
 	}
+	
+	public void close(){
+		sender.close();
+	}
 }

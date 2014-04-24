@@ -17,5 +17,10 @@ public class PilotManager {
 		player = new Player(inputManager, connectionFactory.makeConnection("usb"));
 		// TODO Fill up AIList (AIFactory?)
 	}
+	
+	public void closeAll(){
+		player.close();
+		//TODO close AIs
+	}
 
 }

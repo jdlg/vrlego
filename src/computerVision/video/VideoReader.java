@@ -52,4 +52,8 @@ public class VideoReader implements Runnable {
 			}
 		}
 	}
+	
+	public void close() {
+		capture.release();
+	}
 }

@@ -19,7 +19,7 @@ public class Player extends Pilot {
 		inputManager.addMapping("down", new KeyTrigger(KeyInput.KEY_DOWN));
 		inputManager.addListener(new ActionListener() {
 			
-			int value = 10, r = 0, u = 0, l = 0, d = 0;
+			int value = 255, r = 0, u = 0, l = 0, d = 0;
 
 			@Override
 			public void onAction(String name, boolean press, float arg2) {
