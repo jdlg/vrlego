@@ -41,8 +41,8 @@ public class PointTracker {
 		pointFinder.uppdateImage(videoReader.read());
 		for (int i = 0; i < colors.length; i++) {
 			HSVRange range = rangeSet.get(colors[i]);
-			ArrayList<Point> points = pointFinder.findPoints(range, 1);
-			// System.out.println(points.size());
+//			ArrayList<Point> points = pointFinder.findPoints(range, 1);
+			ArrayList<Point> points = pointFinder.findPoints(range, 5);
 			returnPointMap.put(colors[i], points);
 		}
 

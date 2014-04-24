@@ -54,13 +54,13 @@ public class PointFinder {
 
 		// Finding the threshold
 		Mat grayMat = Thresholding.filterColor(hsvMat, range);
-//		Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(),
-//				grayMat);
+		// Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(),
+		// grayMat);
 
 		// Reduce noise
-//		 Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
-//		 Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
-		Imgproc.blur(grayMat, grayMat, new Size(3, 3));
+		// Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
+		// Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
+		// Imgproc.blur(grayMat, grayMat, new Size(3, 3));
 
 		ArrayList<MatOfPoint> contours = new ArrayList<>();
 		// Will hold the an outline of white spots
