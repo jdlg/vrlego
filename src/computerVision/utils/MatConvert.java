@@ -8,6 +8,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import computerVision.colorTracking.HSVRange;
+import computerVision.colorTracking.Thresholding;
 
 public class MatConvert {
 
@@ -29,9 +30,7 @@ public class MatConvert {
 	public static BufferedImage matToBufferedImage(Mat imageMat, HSVRange range) {
 		Mat hsvMat = new Mat();
 		Imgproc.cvtColor(imageMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
-		Mat grayMat = new Mat();
-		Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(), grayMat);
-		
+		Mat grayMat = Thresholding.filterColor(hsvMat, range);
 		byte[] sourcePixels = new byte[imageMat.width() * imageMat.height()
 				* imageMat.channels()];
 		grayMat.get(0, 0, sourcePixels);

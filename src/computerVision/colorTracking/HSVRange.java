@@ -92,5 +92,9 @@ public class HSVRange implements Serializable {
 		s += "\n";
 		return s;
 	}
+	
+	public boolean isSpilt(){
+		return minValues[0] > maxValues[0];
+	}
 
 }

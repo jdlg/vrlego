@@ -44,12 +44,6 @@ public class GrayMatPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		BufferedImage image = null;
-//		Imgproc.blur(mat, mat, new Size(9, 9));
-//		Imgproc.erode(mat, mat, new Mat(3, 3, 0));
-//		Imgproc.dilate(mat, mat, new Mat(3, 3, 0));
-//		Imgproc.erode(mat, mat, new Mat(5, 5, 0));
-//		Imgproc.dilate(mat, mat, new Mat(5, 5, 0));
-//		Imgproc.blur(mat, mat, new Size(3, 3));
 		image = MatConvert.matToBufferedImage(mat, range);
 		g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
 	}

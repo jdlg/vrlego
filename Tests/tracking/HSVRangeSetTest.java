@@ -23,6 +23,7 @@ public class HSVRangeSetTest {
 	@Test
 	public void test() {
 		HSVRangeSet set = HSVRangeSerialization.unserializeSet();
+		System.out.println(set.get("red").string());
 		
 //		HSVRange range = HSVRangeSerialization.unserialize("yellow");
 	}

@@ -43,15 +43,16 @@ public class PointTrackingTestProgram {
 				super.paintComponent(g);
 				g.setColor(Color.red);
 
-				HashMap<String, ArrayList<Point>> points = pt.findPoints();
-				for (Point p : points.get("blue")) {
+				HashMap<String, ArrayList<Point>> points = pt.findPoints("red",
+						"yellow");
+				for (Point p : points.get("red")) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("new", (int) p.x + 12, (int) p.y + 5);
+					g.drawString("red", (int) p.x + 12, (int) p.y + 5);
 				}
-				
+
 				for (Point p : points.get("yellow")) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("new", (int) p.x + 12, (int) p.y + 5);
+					g.drawString("yellow", (int) p.x + 12, (int) p.y + 5);
 				}
 			}
 		};

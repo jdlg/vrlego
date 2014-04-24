@@ -53,9 +53,9 @@ public class PointFinder {
 			expectedPoints = MAX_NUM_OBJECTS;
 
 		// Finding the threshold
-		Mat grayMat = new Mat();
-		Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(),
-				grayMat);
+		Mat grayMat = Thresholding.filterColor(hsvMat, range);
+//		Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(),
+//				grayMat);
 
 		// Reduce noise
 //		 Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
