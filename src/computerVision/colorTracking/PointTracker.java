@@ -33,7 +33,7 @@ public class PointTracker {
 	 * @return
 	 */
 	public HashMap<String, ArrayList<Point>> findPoints() {
-		return findPoints("blue", "yellow");
+		return findPoints("blue", "red");
 	}
 
 	public HashMap<String, ArrayList<Point>> findPoints(String... colors) {

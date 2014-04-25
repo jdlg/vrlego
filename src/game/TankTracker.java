@@ -27,16 +27,15 @@ public class TankTracker {
 		if (pointPose.get(tank.getColor1()).size() > 0
 				&& pointPose.get(tank.getColor2()).size() > 0) {
 			Point bluePoint = pointPose.get(tank.getColor1()).get(0);
-			Point yellowPoint = pointPose.get(tank.getColor2()).get(0);
+			Point redPoint = pointPose.get(tank.getColor2()).get(0);
 			float angle = (float) computerVision.Geometry.calculateAngle(
-					bluePoint, yellowPoint);
-			Point midPint = new Point((bluePoint.x + yellowPoint.x) / 2,
-					(bluePoint.y + yellowPoint.y) / 2);
-			tank.setXZA(-(float) (midPint.x), (float) (midPint.y), angle);
+					bluePoint, redPoint);
+			Point midPint = new Point((bluePoint.x + redPoint.x) / 2,
+					(bluePoint.y + redPoint.y) / 2);
+			tank.setXZA(-(float) (midPint.x), (float) (midPint.y), (float) (angle + Math.PI/2));
 			// System.out.println("tank pose: " + midPint.x + ", " + midPint.y);
 		} else {
-			// System.out.println("tank not found");
+			tank.setXZA(0, 0, 0);
 		}
-		// tank.setXZA(0, 0, 0);
 	}
 }

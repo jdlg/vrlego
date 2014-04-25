@@ -13,7 +13,7 @@ public class Tank extends Node {
 	private String color1, color2;
 
 	public Tank(Geometry geom) {
-		this(geom, "blue", "yellow");
+		this(geom, "blue", "red");
 	}
 
 	public Tank(Geometry geom, String color1, String color2) {

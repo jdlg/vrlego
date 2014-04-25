@@ -19,35 +19,17 @@ public class InstructionsSender {
 	private int precision = 255;
 
 	public InstructionsSender(String deviceURL) {
-		// TODO improve. loop: retry in stead of exit
 		NXTConnector connector = new NXTConnector();
-		// if (!connector.connectTo(deviceURL)) {
-		// System.out.println("Not connected");
-		// System.exit(0);
-		// }
-
 		System.out.println("Looking for NXT");
 		while (!connector.connectTo(deviceURL)) {
 		}
 		System.out.println("NXT connected");
-
 		dos = new DataOutputStream(connector.getOutputStream());
 	}
 
-	public void sendInstruction(byte[] inst) {
-		try {
-			dos.write(inst);
-			dos.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void sendInstruction(int x, int y) {
-		// TODO bruke et annet tall enn 32 (255?)
 		try {
 			dos.writeInt((x + 256) * 512 + y + 256);
-//			dos.writeInt((128 + 128) * 256 + 0 + 128);
 			dos.flush();
 			System.out.println("sendt " + x + " " + y);
 		} catch (IOException e) {

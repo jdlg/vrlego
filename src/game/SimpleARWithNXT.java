@@ -15,9 +15,9 @@ public class SimpleARWithNXT extends SimpleAR {
 	}
 
 	@Override
-	public void simpleInitApp() {
-		super.simpleInitApp();
+	public void simpleInitApp(){
 		pilotManager = new PilotManager(inputManager);
+		super.simpleInitApp();
 	}
 	
 	@Override
