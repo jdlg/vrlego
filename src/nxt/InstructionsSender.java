@@ -27,11 +27,15 @@ public class InstructionsSender {
 		dos = new DataOutputStream(connector.getOutputStream());
 	}
 
-	public void sendInstruction(int x, int y) {
+	public void sendInstruction(int r, int v) {
+		if (r > 255) r = 255;
+		else if (r < -255) r =-255;
+		if (v > 255) v = 255;
+		else if (v < -255) v =-255;
 		try {
-			dos.writeInt((x + 256) * 512 + y + 256);
+			dos.writeInt((r + 256) * 512 + v + 256);
 			dos.flush();
-			System.out.println("sendt " + x + " " + y);
+			System.out.println("sendt " + r + " " + v);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

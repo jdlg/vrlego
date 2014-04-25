@@ -1,5 +1,6 @@
 package nxt;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -14,7 +15,7 @@ import game.Joystick;
 
 public class PlayerToNXT extends JFrame implements KeyListener {
 
-	private int x = 0, y = 0, topvalue = 255, squareWidth = 255;
+	private int x = 0, y = 0, topvalue = 255, squareWidth = 127;
 	private boolean u = false, d = false, l = false, r = false;
 	private InstructionsSender sender;
 
@@ -68,8 +69,16 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			int c = 10 + squareWidth / 2;
+
+			g.setColor(Color.gray);
 			g.drawRect(10, 10, squareWidth, squareWidth);
-			g.fillOval(10 + squareWidth/2 + x/2 - 5, 10 + squareWidth/2 + y/2 - 5, 10, 10);
+
+			g.drawLine(c - 10, c, c + 10, c);
+			g.drawLine(c, c - 10, c, c + 10);
+
+			g.setColor(Color.black);
+			g.fillOval(c + x / 4 - 5, c + y / 4 - 5, 10, 10);
 		}
 	}
 
