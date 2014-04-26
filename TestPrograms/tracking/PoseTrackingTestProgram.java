@@ -58,7 +58,7 @@ public class PoseTrackingTestProgram {
 				g.translate(w / 2, h / 2);
 
 				int chessWidth = (int) (cols * squareSize), chessHeight = (int) (rows * squareSize);
-				
+
 				boolean blackSquare = true;
 				for (int j = 0; j < rows; j++) {
 					for (int i = 0; i < cols; i++) {
@@ -69,10 +69,14 @@ public class PoseTrackingTestProgram {
 								-chessHeight / 2 + j * squareSize, squareSize,
 								squareSize);
 					}
-//					blackSquare = !blackSquare;
 				}
 
-				HashMap<String, ArrayList<Point>> points = ppt.findPoints();
+				HashMap<String, ArrayList<Point>> points = ppt.findPoints(
+						"red", "blue", "yellow", "green");
+				for (Point p : points.get("red")) {
+					g.setColor(Color.red);
+					g.fillOval((int) p.x - r, (int) p.y - r, 2 * r, 2 * r);
+				}
 				for (Point p : points.get("blue")) {
 					g.setColor(Color.blue);
 					g.fillOval((int) p.x - r, (int) p.y - r, 2 * r, 2 * r);
@@ -81,7 +85,10 @@ public class PoseTrackingTestProgram {
 					g.setColor(Color.yellow);
 					g.fillOval((int) p.x - r, (int) p.y - r, 2 * r, 2 * r);
 				}
-
+				for (Point p : points.get("green")) {
+					g.setColor(Color.green);
+					g.fillOval((int) p.x - r, (int) p.y - r, 2 * r, 2 * r);
+				}
 			}
 		};
 		camFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

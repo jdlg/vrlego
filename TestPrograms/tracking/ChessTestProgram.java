@@ -55,10 +55,6 @@ public class ChessTestProgram {
 				Calib3d.drawChessboardCorners(image, new Size(w, h),
 						chssPoints, found);
 				if (found) {
-					// System.out.println(chssPoints.dump());
-//					ArrayList<MatOfPoint2f> iList = new ArrayList<>();
-//					iList.add(chssPoints);
-
 					ArrayList<Point3> pointList = new ArrayList<>();
 					for (int i = 0; i < h; i++) {
 						for (int j = 0; j < w; j++) {
@@ -68,45 +64,16 @@ public class ChessTestProgram {
 					}
 					MatOfPoint3f points = new MatOfPoint3f();
 					points.fromList(pointList);
-//					ArrayList<MatOfPoint3f> oList = new ArrayList<>();
-//					oList.add(points);
-
-					// System.out.println(points.dump());
-					// System.out.println();
-
-					// Mat cameraMatrix = Calib3d.initCameraMatrix2D(oList,
-					// iList,
-					// new Size(640, 480));
 					double W = 640, H = 480, fl = 480 * 2.16; // TODO fl?
 					Mat cameraMatrix = new Mat(3, 3, CvType.CV_64F);
 					cameraMatrix.put(0, 0, fl, 0, W / 2, 0, fl, H / 2, 0, 0, 1);
-					// System.out.println(cameraMatrix.dump());
 					Mat rvec = new Mat(), tvec = new Mat();
 
 					Calib3d.solvePnP(points, chssPoints, cameraMatrix,
 							new MatOfDouble(), rvec, tvec);
-//					System.out.println(rvec.dump());
-//					System.out.println(tvec.dump() + "\n");
-					
-//					ArrayList<Point> corners = new ArrayList<>();
-//					
-//					corners.add(avgPointsArray.get(cols * rows - 1));//1
-//					corners.add(avgPointsArray.get(rows - 1));//2
-//					corners.add(avgPointsArray.get(0));//3
-//					corners.add(avgPointsArray.get(cols * rows - rows));//4
-//					
-//					HomographyTransorm ht = new HomographyTransorm(corners, cols * squareSize, rows
-//							* squareSize);
 					
 				}
 				super.paintComponent(g);
-				// Core.rectangle(image, new Point(100, 100), new Point(200,
-				// 200),
-				// new Scalar(0, 255, 0));
-				// MatOfPoint2f points = new MatOfPoint2f();
-				// Calib3d.findChessboardCorners(image, new Size(5,4), points);
-				// Calib3d.drawChessboardCorners(image, new Size(3,3), points,
-				// true);
 			}
 		};
 		camFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

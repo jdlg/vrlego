@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
 import computerVision.perspective.HomographyTransorm;

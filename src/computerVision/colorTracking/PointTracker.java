@@ -38,7 +38,7 @@ public class PointTracker {
 
 	public HashMap<String, ArrayList<Point>> findPoints(String... colors) {
 		HashMap<String, ArrayList<Point>> returnPointMap = new HashMap<>();
-		pointFinder.uppdateImage(videoReader.read());
+		pointFinder.updateImage(videoReader.read());
 		for (int i = 0; i < colors.length; i++) {
 			HSVRange range = rangeSet.get(colors[i]);
 //			ArrayList<Point> points = pointFinder.findPoints(range, 1);

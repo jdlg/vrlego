@@ -44,7 +44,7 @@ public class TrackingTestProgram {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				pointFinder.uppdateImage(mat);
+				pointFinder.updateImage(mat);
 				g.setColor(Color.black);
 				// for (Point p : new PointTracker(mat, this)
 				// .findePoints(green, 2)) {

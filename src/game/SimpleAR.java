@@ -44,7 +44,6 @@ import computerVision.video.VideoReader;
 
 public class SimpleAR extends SimpleApplication {
 
-	// TODO rydd opp
 	private Picture cameraPicture = new Picture("background");
 	private HomographyTransorm homographyTransorm;
 	private Mat image;
@@ -64,7 +63,6 @@ public class SimpleAR extends SimpleApplication {
 	@Override
 	public void simpleInitApp() {
 
-		// 3
 		cameraPicture.setWidth(settings.getWidth());
 		cameraPicture.setHeight(settings.getHeight());
 		cameraPicture.setPosition(0, 0);
@@ -85,8 +83,6 @@ public class SimpleAR extends SimpleApplication {
 		viewPort2.setClearFlags(false, true, true);
 		viewPort2.attachScene(rootNode);
 
-		// setPosition();
-		// 8
 		image = new Mat();
 		videoReader = new VideoReader(image, 0);
 
@@ -147,13 +143,10 @@ public class SimpleAR extends SimpleApplication {
 				.getY()));
 		rotation = new Quaternion(angles2);
 		cam2.setRotation(rotation);
-		// cam2.setFrustumPerspective(60, 640 / 480, 1, 1000);
-		// cam2.lookAt(new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
 	}
 
 	@Override
 	public void simpleUpdate(float tpf) {
-		// 10
 		setPosition();
 		setBackground();
 	}
@@ -162,7 +155,7 @@ public class SimpleAR extends SimpleApplication {
 	 * Reads a frame from the webcam, and sets it to the background
 	 */
 	private void setBackground() {
-		// videoReader.read(); TODO This is done in pointTracker; move it?
+		// videoReader.read(); //TODO This is done in pointTracker; move it?
 		Core.rectangle(image, new Point(640 / 2 - 5, 480 / 2 - 5), new Point(
 				640 / 2 + 5, 480 / 2 + 5), new Scalar(0, 255, 0));
 		BufferedImage bImage = MatConvert.matToBufferedImage(image);
@@ -173,7 +166,6 @@ public class SimpleAR extends SimpleApplication {
 	}
 
 	private void setPosition() {
-		// 5
 		tankTracker.updatePositions();
 	}
 

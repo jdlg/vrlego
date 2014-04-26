@@ -5,7 +5,8 @@ import java.io.Serializable;
 import org.opencv.core.Scalar;
 
 /**
- * Holds upper and lower values of Hue, Saturation and Value
+ * Holds upper and lower values of Hue, Saturation and Value. The getMinScalar()
+ * and getMaxScalar() can be used in OpenCV's Core.inRange() method.
  * 
  * @author Johan LG
  * 
@@ -27,7 +28,7 @@ public class HSVRange implements Serializable {
 	}
 
 	/**
-	 * Returns the minimum values as a scalar
+	 * Returns the minimum values as a scalar.
 	 * 
 	 * @return minScalar
 	 */
@@ -36,7 +37,7 @@ public class HSVRange implements Serializable {
 	}
 
 	/**
-	 * Returns the maximum values as a scalar
+	 * Returns the maximum values as a scalar.
 	 * 
 	 * @return maxScalar
 	 */
@@ -92,8 +93,15 @@ public class HSVRange implements Serializable {
 		s += "\n";
 		return s;
 	}
-	
-	public boolean isSpilt(){
+
+	/**
+	 * Returns true if H-min is higher then H-max. This is can be useful if
+	 * thresholding a range of colors that in on both ends of the hue spectrum,
+	 * witch is often the case for red colors.
+	 * 
+	 * @return (H-min > H-max)
+	 */
+	public boolean isSpilt() {
 		return minValues[0] > maxValues[0];
 	}
 

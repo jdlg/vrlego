@@ -13,5 +13,4 @@ public class HelloLego {
 		System.out.println("lego!");
 		Button.waitForAnyPress();
 	}
-
 }

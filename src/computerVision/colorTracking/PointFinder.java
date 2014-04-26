@@ -3,15 +3,12 @@ package computerVision.colorTracking;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.*;
 
-import computerVision.gui.BGRMatPanel;
-
 /**
- * Finds points of within an HSVRange in an image (Mat)
+ * Finds points within an HSVRange in an image (Mat)
  * 
  * @author Johan LG
  */
@@ -19,21 +16,21 @@ import computerVision.gui.BGRMatPanel;
 public class PointFinder {
 
 	private Mat hsvMat;
-	private final int MAX_NUM_OBJECTS = 50;
-	private final double MIN_OBJECT_AREA = 20;// TODO
+	private final int MAX_NUM_OBJECTS = 10;
+	private final double MIN_OBJECT_AREA = 20;
 
 	public PointFinder(Mat bgrMat) {
 		hsvMat = new Mat();
 		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
 	}
 
-	public ArrayList<Point> findPoints(HSVRange range) {
-		return findPoints(range, MAX_NUM_OBJECTS);
-	}
-
-	public void uppdateImage(Mat bgrMat) {
+	public void updateImage(Mat bgrMat) {
 		hsvMat = new Mat();
 		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
+	}
+
+	public ArrayList<Point> findPoints(HSVRange range) {
+		return findPoints(range, 0);
 	}
 
 	/**
@@ -43,19 +40,18 @@ public class PointFinder {
 	 * If less points are found then the expected amount, then all point are
 	 * returned.
 	 * 
+	 * 
 	 * @param range
 	 * @param expectedPoints
 	 * @return points
 	 */
 	public ArrayList<Point> findPoints(HSVRange range, int expectedPoints) {
 
-		if (expectedPoints == 0)
+		if (expectedPoints <= 0 || expectedPoints > MAX_NUM_OBJECTS)
 			expectedPoints = MAX_NUM_OBJECTS;
 
 		// Finding the threshold
 		Mat grayMat = Thresholding.filterColor(hsvMat, range);
-		// Core.inRange(hsvMat, range.getMinScalar(), range.getMaxScalar(),
-		// grayMat);
 
 		// Reduce noise
 		// Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
@@ -79,7 +75,6 @@ public class PointFinder {
 		// for holding the center of the objects that will be returned
 
 		if (numObjects > 0) {
-			// if (numObjects < MAX_NUM_OBJECTS) {
 
 			double foundObjects = 0;
 			HashMap<Double, Point> area2Points = new HashMap<>();
@@ -98,16 +93,12 @@ public class PointFinder {
 			}
 
 			// Add the center point of the largest areas to the points list
-			Arrays.sort(areas);// TODO nødvendig?
+			Arrays.sort(areas);
 			if (expectedPoints > foundObjects)
 				expectedPoints = (int) foundObjects;
 			for (int i = 0; i < expectedPoints; i++) {
 				points.add(area2Points.get(areas[areas.length - 1 - i]));
 			}
-			// System.out.println(points.size());
-
-			// } else
-			// System.out.println("To mutch noise");
 		}
 
 		return points;

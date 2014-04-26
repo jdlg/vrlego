@@ -13,7 +13,5 @@ public class TankControlTest {
 		Thread.sleep(w);
 		sender.sendInstruction(0, 0);
 		sender.close();
-
-
 	}
 }

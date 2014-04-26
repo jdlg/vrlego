@@ -41,18 +41,27 @@ public class PointTrackingTestProgram {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				g.setColor(Color.red);
+				g.setColor(Color.black);
 
 				HashMap<String, ArrayList<Point>> points = pt.findPoints("red",
-						"yellow");
+						"blue", "yellow", "green");
 				for (Point p : points.get("red")) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("red", (int) p.x + 12, (int) p.y + 5);
 				}
 
+				for (Point p : points.get("blue")) {
+					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
+				}
 				for (Point p : points.get("yellow")) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("yellow", (int) p.x + 12, (int) p.y + 5);
+				}
+				
+				for (Point p : points.get("green")) {
+					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+					g.drawString("green", (int) p.x + 12, (int) p.y + 5);
 				}
 			}
 		};

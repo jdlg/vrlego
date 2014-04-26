@@ -33,7 +33,6 @@ public class TankTracker {
 			Point midPint = new Point((bluePoint.x + redPoint.x) / 2,
 					(bluePoint.y + redPoint.y) / 2);
 			tank.setXZA(-(float) (midPint.x), (float) (midPint.y), (float) (angle + Math.PI/2));
-			// System.out.println("tank pose: " + midPint.x + ", " + midPint.y);
 		} else {
 			tank.setXZA(0, 0, 0);
 		}
