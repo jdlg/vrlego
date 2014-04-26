@@ -15,22 +15,11 @@ import org.opencv.imgproc.*;
 
 public class PointFinder {
 
-	private Mat hsvMat;
-	private final int MAX_NUM_OBJECTS = 10;
-	private final double MIN_OBJECT_AREA = 20;
+	private final static int MAX_NUM_OBJECTS = 10;
+	private final static double MIN_OBJECT_AREA = 20;
 
-	public PointFinder(Mat bgrMat) {
-		hsvMat = new Mat();
-		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
-	}
-
-	public void updateImage(Mat bgrMat) {
-		hsvMat = new Mat();
-		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
-	}
-
-	public ArrayList<Point> findPoints(HSVRange range) {
-		return findPoints(range, 0);
+	public static ArrayList<Point> findPoints(Mat bgrMat, HSVRange range) {
+		return findPoints(bgrMat, range, 0);
 	}
 
 	/**
@@ -45,7 +34,11 @@ public class PointFinder {
 	 * @param expectedPoints
 	 * @return points
 	 */
-	public ArrayList<Point> findPoints(HSVRange range, int expectedPoints) {
+	public static ArrayList<Point> findPoints(Mat bgrMat, HSVRange range,
+			int expectedPoints) {
+
+		Mat hsvMat = new Mat();
+		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
 
 		if (expectedPoints <= 0 || expectedPoints > MAX_NUM_OBJECTS)
 			expectedPoints = MAX_NUM_OBJECTS;

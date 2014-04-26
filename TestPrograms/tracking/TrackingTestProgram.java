@@ -19,64 +19,56 @@ import computerVision.colorTracking.PointFinder;
 import computerVision.gui.BGRMatPanel;
 import computerVision.video.VideoReader;
 
+/**
+ * 
+ * @author Johan LG
+ * 
+ */
 public class TrackingTestProgram {
 
 	public static Lock lock = new ReentrantLock();
 	public static Condition newFrame = lock.newCondition();
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		JFrame camFrame = new JFrame("Tracking test");
 		Mat image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
-		// final HSVRange green = HSVRangeSerialization.unserialize("green");
+		final HSVRange green = HSVRangeSerialization.unserialize("green");
 		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
-//		final HSVRange red = HSVRangeSerialization.unserialize("red");
+		final HSVRange red = HSVRangeSerialization.unserialize("red");
 		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
-		final PointFinder pointFinder = new PointFinder(image);
 
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				pointFinder.updateImage(mat);
 				g.setColor(Color.black);
-				// for (Point p : new PointTracker(mat, this)
-				// .findePoints(green, 2)) {
-				// g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-				// g.drawString("green", (int) p.x + 12, (int) p.y + 12);
-				// }
-//				System.out.println(blue.string());
-				for (Point p : pointFinder.findPoints(blue, 4)) {
+				for (Point p : PointFinder.findPoints(mat, blue, 4)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
-					//System.out.println(p.x + " " + p.y);
 				}
-//				System.out.println();
-//				for (Point p : pointTracker.findPoints(red, 1)) {
-//					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-//					g.drawString("red", (int) p.x + 12, (int) p.y + 12);
-//
-//				}
-				for (Point p : pointFinder.findPoints(yellow, 1)) {
+				for (Point p : PointFinder.findPoints(mat, yellow, 3)) {
 					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
 					g.drawString("yellow", (int) p.x + 12, (int) p.y + 12);
 				}
-				
+				for (Point p : PointFinder.findPoints(mat, red, 2)) {
+					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
+				}
+				for (Point p : PointFinder.findPoints(mat, green, 1)) {
+					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+					g.drawString("yellow", (int) p.x + 12, (int) p.y + 12);
+				}
+
 			}
 		};
 		camFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		camFrame.setContentPane(camPanel);
-		camFrame.setVisible(true);	
+		camFrame.setVisible(true);
 		camPanel.setPreferredSize(new Dimension(image.width(), image.height()));
 		camFrame.pack();
-		//camFrame.setSize(image.width(), image.height());
-		//System.out.println(image.height()+" "+image.width());
-		//System.out.println();
 	}
 }

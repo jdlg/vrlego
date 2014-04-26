@@ -12,13 +12,11 @@ import computerVision.video.VideoReader;
 
 public class PointTracker {
 
-	private PointFinder pointFinder;
 	private HSVRangeSet rangeSet;
 	private VideoReader videoReader;
 
 	public PointTracker(VideoReader reader) {
 		videoReader = reader;
-		pointFinder = new PointFinder(reader.getImage());
 		rangeSet = HSVRangeSerialization.unserializeSet();
 
 	}
@@ -38,11 +36,11 @@ public class PointTracker {
 
 	public HashMap<String, ArrayList<Point>> findPoints(String... colors) {
 		HashMap<String, ArrayList<Point>> returnPointMap = new HashMap<>();
-		pointFinder.updateImage(videoReader.read());
 		for (int i = 0; i < colors.length; i++) {
 			HSVRange range = rangeSet.get(colors[i]);
-//			ArrayList<Point> points = pointFinder.findPoints(range, 1);
-			ArrayList<Point> points = pointFinder.findPoints(range, 5);
+			// ArrayList<Point> points = pointFinder.findPoints(range, 1);
+			ArrayList<Point> points = PointFinder.findPoints(
+					videoReader.read(), range, 5);
 			returnPointMap.put(colors[i], points);
 		}
 
