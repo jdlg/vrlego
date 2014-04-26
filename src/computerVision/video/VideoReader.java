@@ -7,8 +7,6 @@ import org.opencv.core.Size;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 
-import computerVision.Global;
-
 /**
  * Reads from a wabcam and continuously writes the data to a Mat
  * 
@@ -44,7 +42,7 @@ public class VideoReader implements Runnable {
 		if (capture.isOpened()) {
 			while (true) {
 				try {
-					Thread.sleep(1000 / Global.framerate);
+					Thread.sleep(1000 / 30);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

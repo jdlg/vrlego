@@ -14,14 +14,15 @@ import computerVision.colorTracking.HSVRangeSet;
 
 import java.lang.String;
 
+import javax.swing.JOptionPane;
+
 public class HSVRangeSerialization {
-	
+
 	private static String path = "HSVRanges/";
-	
+
 	public static void serialize(HSVRange range, String color) {
 		try {
-			FileOutputStream fos = new FileOutputStream(path + color
-					+ ".ser");
+			FileOutputStream fos = new FileOutputStream(path + color + ".ser");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(range);
 			oos.close();
@@ -36,22 +37,28 @@ public class HSVRangeSerialization {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(path + color + ".ser");
-//			System.out.println(path + color + ".ser");
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			HSVRange range = (HSVRange) ois.readObject();
 			ois.close();
 			return range;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			int option = javax.swing.JOptionPane.showConfirmDialog(null, color
+					+ " color range not set.\nPerform color calibration?",
+					"Range not Found", JOptionPane.YES_NO_OPTION);
+			if (option == 0) {
+				ManualColorCalibrationMain.main(color);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+
+		double[] min = { 0, 0, 0 };
+		return new HSVRange(min, min);
 	}
 
-	public static HSVRangeSet unserializeSet(){
+	public static HSVRangeSet unserializeSet() {
 		HSVRangeSet set = new HSVRangeSet();
 		File folder = new File(path);
 		FilenameFilter nameFilter = new FilenameFilter() {
@@ -61,18 +68,33 @@ public class HSVRangeSerialization {
 			}
 		};
 		File[] files = folder.listFiles(nameFilter);
-		
+
 		for (int i = 0; i < files.length; i++) {
-			String name = files[i].getName().substring(0, files[i].getName().length()-4);
+			String name = files[i].getName().substring(0,
+					files[i].getName().length() - 4);
 			set.put(name, unserialize(name));
 		}
-		
+
 		return set;
 	};
-	
+
+	public static HSVRangeSet unserialize4ColorSet() {
+		String[] colors = { "red", "blue", "yellow", "green" };
+		return unserializeSet(colors);
+	}
+
+	public static HSVRangeSet unserializeSet(String... colors) {
+		HSVRangeSet set = new HSVRangeSet();
+		for (int i = 0; i < colors.length; i++) {
+			String name = colors[i];
+			set.put(name, unserialize(name));
+		}
+
+		return set;
+	}
+
 	public static String getFilePath(String color) {
 		return path + color + ".ser";
 	}
-	
-	
+
 }

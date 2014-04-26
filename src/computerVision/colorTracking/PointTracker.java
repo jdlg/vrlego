@@ -17,7 +17,7 @@ public class PointTracker {
 
 	public PointTracker(VideoReader reader) {
 		videoReader = reader;
-		rangeSet = HSVRangeSerialization.unserializeSet();
+		rangeSet = HSVRangeSerialization.unserialize4ColorSet();
 
 	}
 

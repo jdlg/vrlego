@@ -23,11 +23,15 @@ import computerVision.gui.GrayMatPanel;
 import computerVision.video.VideoReader;
 
 public class ManualColorCalibration {
+	
+	public ManualColorCalibration(){
+		this("");
+	}
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public ManualColorCalibration(String initialText) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		JFrame camFrame = new JFrame("Kalibrering");
 		Mat image = new Mat();
@@ -112,7 +116,7 @@ public class ManualColorCalibration {
 			maxSliders[i].addChangeListener(maxListener);
 		}
 
-		final JTextField fileField = new JTextField("blue");
+		final JTextField fileField = new JTextField(initialText);
 		gbc.gridy++;
 		sliderPanel.add(fileField, gbc);
 		
