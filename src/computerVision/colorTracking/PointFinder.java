@@ -36,7 +36,7 @@ public class PointFinder {
 	 */
 	public static ArrayList<Point> findPoints(Mat bgrMat, HSVRange range,
 			int expectedPoints) {
-
+	
 		Mat hsvMat = new Mat();
 		Imgproc.cvtColor(bgrMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);
 
@@ -44,35 +44,27 @@ public class PointFinder {
 			expectedPoints = MAX_NUM_OBJECTS;
 
 		// Finding the threshold
-		Mat grayMat = Thresholding.filterColor(hsvMat, range);
-
+		Mat binaryMat = Thresholding.filterColor(hsvMat, range);
+		
 		// Reduce noise
 		// Imgproc.erode(grayMat, grayMat, new Mat(5, 5, 0));
 		// Imgproc.dilate(grayMat, grayMat, new Mat(5, 5, 0));
 		// Imgproc.blur(grayMat, grayMat, new Size(3, 3));
-
+		
+		// Find the contour of all white spots in the threshold
 		ArrayList<MatOfPoint> contours = new ArrayList<>();
-		// Will hold the an outline of white spots
-
-		// Find the contour of all white spots in temp
 		Mat temp = new Mat();
-		grayMat.copyTo(temp);
+		binaryMat.copyTo(temp);
 		Mat hierarchy = new Mat();
 		Imgproc.findContours(temp, contours, hierarchy, Imgproc.RETR_CCOMP,
 				Imgproc.CHAIN_APPROX_SIMPLE);
 
-		double numObjects = contours.size();
-		// Number of objects found
-
+		// Adding the center point of the largest ares an ArrayList
 		ArrayList<Point> points = new ArrayList<>();
-		// for holding the center of the objects that will be returned
-
+		double numObjects = contours.size();
 		if (numObjects > 0) {
-
 			double foundObjects = 0;
 			HashMap<Double, Point> area2Points = new HashMap<>();
-			// To select the largest objects
-
 			double[] areas = new double[(int) numObjects];
 			for (int i = 0; i < numObjects; i++) {
 				Moments moment = Imgproc.moments(contours.get(i));
@@ -84,8 +76,6 @@ public class PointFinder {
 					foundObjects++;
 				}
 			}
-
-			// Add the center point of the largest areas to the points list
 			Arrays.sort(areas);
 			if (expectedPoints > foundObjects)
 				expectedPoints = (int) foundObjects;
@@ -93,7 +83,6 @@ public class PointFinder {
 				points.add(area2Points.get(areas[areas.length - 1 - i]));
 			}
 		}
-
 		return points;
 	}
 }

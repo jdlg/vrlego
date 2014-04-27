@@ -19,12 +19,14 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 import computerVision.colorTracking.HSVRange;
+import computerVision.gui.BGRMatPanel;
 import computerVision.gui.GrayMatPanel;
 import computerVision.video.VideoReader;
 
 public class ManualColorCalibration {
-	
-	public ManualColorCalibration(){
+	private Mat image;
+
+	public ManualColorCalibration() {
 		this("");
 	}
 
@@ -33,34 +35,34 @@ public class ManualColorCalibration {
 	 */
 	public ManualColorCalibration(String initialText) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		JFrame camFrame = new JFrame("Kalibrering");
-		Mat image = new Mat();
+		image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
-		// double[] min = { 1.0, 125.0, 202.0 };
-		// double[] max = { 11.0, 175.0, 255.0 };
 
 		double[] min = { 0.0, 0.0, 0.0 };
 		double[] max = { 255.0, 255.0, 255.0 };
-		final HSVRange range = new HSVRange(min, max); //Holds max and min HSV values for the color we want to track
-		
-		GrayMatPanel camPanel = new GrayMatPanel(image, range);
-		camFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		camFrame.setContentPane(camPanel);
-		camFrame.setVisible(true);
-		camFrame.setSize(640, 480);
+		final HSVRange range = new HSVRange(min, max);
+		// Holds max and min HSV values for the color we want to track
+
+		JFrame binaryFrame = new JFrame("Threshold");
+		GrayMatPanel binaryPanel = new GrayMatPanel(image, range);
+		binaryPanel.setPreferredSize(new Dimension(image.width(), image
+				.height()));
+		binaryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		binaryFrame.setContentPane(binaryPanel);
+		binaryFrame.setVisible(true);
+		binaryFrame.setLocation(955, 0);
+		binaryFrame.pack();
 
 		JFrame sliderFrame = new JFrame();
 		JPanel sliderPanel = new JPanel(new GridBagLayout());
-		sliderPanel.setPreferredSize(new Dimension(300, 420));
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		sliderFrame.setContentPane(sliderPanel);
 		sliderFrame.setVisible(true);
-		//sliderFrame.setSize(300, 420);
 		sliderFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		sliderFrame.pack();
-		// sliderFrame.setLayout(new GridLayout(7, 2));
+		sliderPanel.setPreferredSize(new Dimension(300, 480));
+		sliderFrame.setLocation(640, 0);
 
 		final JSlider[] minSliders = { new JSlider(0, 255, 0),
 				new JSlider(0, 255, 0), new JSlider(0, 255, 0) };
@@ -119,24 +121,27 @@ public class ManualColorCalibration {
 		final JTextField fileField = new JTextField(initialText);
 		gbc.gridy++;
 		sliderPanel.add(fileField, gbc);
-		
+
 		JButton saveButton = new JButton("Save Range");
 		gbc.gridy++;
-		sliderPanel.add(saveButton,gbc);
+		sliderPanel.add(saveButton, gbc);
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				HSVRangeSerialization.serialize(range, fileField.getText());
+				// System.out.println(fileField.getText() + "\n" +
+				// range.string());
 			}
 		});
-		
+
 		JButton loadButton = new JButton("Load Range");
 		gbc.gridy++;
-		sliderPanel.add(loadButton,gbc);
+		sliderPanel.add(loadButton, gbc);
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				HSVRange newRange = HSVRangeSerialization.unserialize(fileField.getText());
+				HSVRange newRange = HSVRangeSerialization.unserialize(fileField
+						.getText(), false);
 				double[] minValues = newRange.getMinValues();
 				double[] maxValues = newRange.getMaxValues();
 				for (int i = 0; i < 3; i++) {
@@ -144,10 +149,10 @@ public class ManualColorCalibration {
 					maxSliders[i].setValue((int) maxValues[i]);
 				}
 			}
-		});		
+		});
 		JButton resetButton = new JButton("Reset");
 		gbc.gridy++;
-		sliderPanel.add(resetButton,gbc);
+		sliderPanel.add(resetButton, gbc);
 		resetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -157,6 +162,29 @@ public class ManualColorCalibration {
 				}
 			}
 		});
-		
+		sliderFrame.pack();
+
+	}
+
+	public Mat getImage() {
+		return image;
+	}
+
+	public static void main(String... strings) {
+		ManualColorCalibration mcc = null;
+		if (strings.length > 0)
+			mcc = new ManualColorCalibration(strings[0]);
+		else
+			mcc = new ManualColorCalibration();
+
+		JFrame rgbFrame = new JFrame("Camera feed");
+		BGRMatPanel rgbPanel = new BGRMatPanel(mcc.getImage());
+		rgbPanel.setPreferredSize(new Dimension(mcc.getImage().width(), mcc
+				.getImage().height()));
+		rgbFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		rgbFrame.setContentPane(rgbPanel);
+		rgbFrame.setVisible(true);
+		rgbFrame.setLocation(0, 0);
+		rgbFrame.pack();
 	}
 }

@@ -20,8 +20,8 @@ public class PointPoseTracker extends PointTracker {
 	}
 
 	@Override
-	public HashMap<String, ArrayList<Point>> findPoints() {
-		HashMap<String, ArrayList<Point>> pointMap = super.findPoints();
+	public HashMap<String, ArrayList<Point>> findPointMap() {
+		HashMap<String, ArrayList<Point>> pointMap = super.findPointMap();
 		HashMap<String, ArrayList<Point>> returnPointMap = new HashMap<>();
 		Set<String> colors = pointMap.keySet();
 		for (String color : colors) {

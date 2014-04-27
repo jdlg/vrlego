@@ -25,22 +25,21 @@ public class PointTracker {
 	 * Returns a HashMap with color (as String) as key pointing an ArrayList of
 	 * points <br>
 	 * <br>
-	 * Currently only returns one blue point and one yellow point (enough to
+	 * This method only returns one blue point and one red point (enough to
 	 * track one Tank)
 	 * 
 	 * @return
 	 */
-	public HashMap<String, ArrayList<Point>> findPoints() {
-		return findPoints("blue", "red");
+	public HashMap<String, ArrayList<Point>> findPointMap() {
+		return findPointMap(1, "blue", "red");
 	}
 
-	public HashMap<String, ArrayList<Point>> findPoints(String... colors) {
+	public HashMap<String, ArrayList<Point>> findPointMap(int numberOfPoints, String... colors) {
 		HashMap<String, ArrayList<Point>> returnPointMap = new HashMap<>();
 		for (int i = 0; i < colors.length; i++) {
 			HSVRange range = rangeSet.get(colors[i]);
-			// ArrayList<Point> points = pointFinder.findPoints(range, 1);
 			ArrayList<Point> points = PointFinder.findPoints(
-					videoReader.read(), range, 5);
+					videoReader.read(), range, numberOfPoints);
 			returnPointMap.put(colors[i], points);
 		}
 

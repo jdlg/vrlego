@@ -3,10 +3,6 @@ package tracking;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javax.swing.JFrame;
 
 import org.opencv.core.Core;
@@ -24,10 +20,7 @@ import computerVision.video.VideoReader;
  * @author Johan LG
  * 
  */
-public class TrackingTestProgram {
-
-	public static Lock lock = new ReentrantLock();
-	public static Condition newFrame = lock.newCondition();
+public class FindPointsTestProgram {
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -35,10 +28,11 @@ public class TrackingTestProgram {
 		Mat image = new Mat();
 		VideoReader reader = new VideoReader(image, 0);
 		new Thread(reader).start();
-		final HSVRange green = HSVRangeSerialization.unserialize("green");
-		final HSVRange blue = HSVRangeSerialization.unserialize("blue");
-		final HSVRange red = HSVRangeSerialization.unserialize("red");
-		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow");
+		boolean calibrate  = true;
+		final HSVRange green = HSVRangeSerialization.unserialize("green", calibrate);
+		final HSVRange blue = HSVRangeSerialization.unserialize("blue", calibrate);
+		final HSVRange red = HSVRangeSerialization.unserialize("red", calibrate);
+		final HSVRange yellow = HSVRangeSerialization.unserialize("yellow", calibrate);
 
 		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {

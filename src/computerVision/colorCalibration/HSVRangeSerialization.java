@@ -33,7 +33,7 @@ public class HSVRangeSerialization {
 		}
 	}
 
-	public static HSVRange unserialize(String color) {
+	public static HSVRange unserialize(String color, boolean askForCalibration) {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(path + color + ".ser");
@@ -42,11 +42,22 @@ public class HSVRangeSerialization {
 			ois.close();
 			return range;
 		} catch (FileNotFoundException e) {
-			int option = javax.swing.JOptionPane.showConfirmDialog(null, color
-					+ " color range not set.\nPerform color calibration?",
-					"Range not Found", JOptionPane.YES_NO_OPTION);
-			if (option == 0) {
-				ManualColorCalibrationMain.main(color);
+			if (askForCalibration) {
+				int option = javax.swing.JOptionPane
+						.showConfirmDialog(
+								null,
+								color
+										+ " color range not set.\nPerform color calibration?",
+								"Range not Found", JOptionPane.YES_NO_OPTION);
+				if (option == 0) {
+					ManualColorCalibration.main(color);
+					askForCalibration = (Boolean) null;
+					askForCalibration = false;
+				}
+			} else {
+				javax.swing.JOptionPane.showConfirmDialog(null, color
+						+ " color reange not found", "Range not Found",
+						JOptionPane.PLAIN_MESSAGE);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -72,7 +83,7 @@ public class HSVRangeSerialization {
 		for (int i = 0; i < files.length; i++) {
 			String name = files[i].getName().substring(0,
 					files[i].getName().length() - 4);
-			set.put(name, unserialize(name));
+			set.put(name, unserialize(name, true));
 		}
 
 		return set;
@@ -80,14 +91,15 @@ public class HSVRangeSerialization {
 
 	public static HSVRangeSet unserialize4ColorSet() {
 		String[] colors = { "red", "blue", "yellow", "green" };
-		return unserializeSet(colors);
+		return unserializeSet(true, colors);
 	}
 
-	public static HSVRangeSet unserializeSet(String... colors) {
+	public static HSVRangeSet unserializeSet(boolean askForCalibration, String... colors) {
 		HSVRangeSet set = new HSVRangeSet();
+		boolean calibrate  = askForCalibration;
 		for (int i = 0; i < colors.length; i++) {
 			String name = colors[i];
-			set.put(name, unserialize(name));
+			set.put(name, unserialize(name, calibrate));
 		}
 
 		return set;

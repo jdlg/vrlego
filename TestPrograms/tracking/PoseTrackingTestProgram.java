@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,20 +13,12 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
-import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.colorTracking.HSVRange;
-import computerVision.colorTracking.PointFinder;
 import computerVision.colorTracking.PointPoseTracker;
-import computerVision.colorTracking.PointTracker;
-import computerVision.gui.BGRMatPanel;
 import computerVision.perspective.Calibration;
 import computerVision.perspective.HomographyTransorm;
 import computerVision.video.VideoReader;
 
 public class PoseTrackingTestProgram {
-
-	public static Lock lock = new ReentrantLock();
-	public static Condition newFrame = lock.newCondition();
 
 	/**
 	 * @param args
@@ -37,15 +26,14 @@ public class PoseTrackingTestProgram {
 	public static void main(String[] args) {
 
 		final int w = 400, h = 400;
-
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		final String[] colors = { "red", "blue", "yellow", "green" };
 		JFrame camFrame = new JFrame("Pose Tracking test");
 		Mat image = new Mat();
 		final VideoReader reader = new VideoReader(image, 0);
 		final int cols = 5, rows = 4, squareSize = 41;
 		HomographyTransorm ht = Calibration.chessboardCalibration(reader, cols,
 				rows, squareSize, 5, new Mat(), new Mat());
-
 		final PointPoseTracker ppt = new PointPoseTracker(reader, ht);
 		@SuppressWarnings("serial")
 		final JPanel camPanel = new JPanel() {
@@ -58,7 +46,6 @@ public class PoseTrackingTestProgram {
 				g.translate(w / 2, h / 2);
 
 				int chessWidth = (int) (cols * squareSize), chessHeight = (int) (rows * squareSize);
-
 				boolean blackSquare = true;
 				for (int j = 0; j < rows; j++) {
 					for (int i = 0; i < cols; i++) {
@@ -70,9 +57,8 @@ public class PoseTrackingTestProgram {
 								squareSize);
 					}
 				}
-
-				HashMap<String, ArrayList<Point>> points = ppt.findPoints(
-						"red", "blue", "yellow", "green");
+				HashMap<String, ArrayList<Point>> points = ppt.findPointMap(1,
+						colors);
 				for (Point p : points.get("red")) {
 					g.setColor(Color.red);
 					g.fillOval((int) p.x - r, (int) p.y - r, 2 * r, 2 * r);

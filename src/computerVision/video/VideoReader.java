@@ -21,18 +21,19 @@ public class VideoReader implements Runnable {
 	public VideoReader(Mat mat, int device) {
 		capture = new VideoCapture(device);
 		this.imageMat = mat;
-		capture.read(this.imageMat);
-		capture.read(this.imageMat);
-		capture.read(this.imageMat);
-		capture.read(this.imageMat);
-		// TODO ?
+
+		// Some cameras will read a dark image on the first few reads
+		for (int i = 0; i < 4; i++) {
+			capture.read(this.imageMat);
+		}
+
 	}
-	
+
 	public Mat getImage() {
 		return imageMat;
 	}
-	
-	public Mat read(){
+
+	public Mat read() {
 		capture.read(imageMat);
 		return imageMat;
 	};
@@ -50,7 +51,7 @@ public class VideoReader implements Runnable {
 			}
 		}
 	}
-	
+
 	public void close() {
 		capture.release();
 	}

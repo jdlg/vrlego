@@ -22,7 +22,7 @@ public class TankTracker {
 	public void updatePositions() {
 		// TODO Expand to support multiple tanks
 		HashMap<String, ArrayList<Point>> pointPose;
-		pointPose = ppt.findPoints();
+		pointPose = ppt.findPointMap();
 
 		if (pointPose.get(tank.getColor1()).size() > 0
 				&& pointPose.get(tank.getColor2()).size() > 0) {

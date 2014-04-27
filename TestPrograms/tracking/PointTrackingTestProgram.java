@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.JFrame;
 
@@ -15,52 +12,34 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 
-import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.colorTracking.HSVRange;
-import computerVision.colorTracking.PointFinder;
 import computerVision.colorTracking.PointTracker;
 import computerVision.gui.BGRMatPanel;
 import computerVision.video.VideoReader;
 
 public class PointTrackingTestProgram {
 
-	public static Lock lock = new ReentrantLock();
-	public static Condition newFrame = lock.newCondition();
-
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		final String[] colors = { "red", "blue", "yellow", "green" };
 		JFrame camFrame = new JFrame("Point Tracking test");
 		Mat image = new Mat();
 		final VideoReader reader = new VideoReader(image, 0);
 		final PointTracker pt = new PointTracker(reader);
-		@SuppressWarnings("serial")
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.setColor(Color.black);
-
-				HashMap<String, ArrayList<Point>> points = pt.findPoints("red",
-						"blue", "yellow", "green");
-				
-				for (Point p : points.get("red")) {
-					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("red", (int) p.x + 12, (int) p.y + 5);
-				}
-				for (Point p : points.get("blue")) {
-					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("blue", (int) p.x + 12, (int) p.y + 5);
-				}
-				for (Point p : points.get("yellow")) {
-					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("yellow", (int) p.x + 12, (int) p.y + 5);
-				}
-				for (Point p : points.get("green")) {
-					g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
-					g.drawString("green", (int) p.x + 12, (int) p.y + 5);
+				HashMap<String, ArrayList<Point>> points = pt.findPointMap(3,
+						colors);
+				for (int i = 0; i < colors.length; i++) {
+					for (Point p : points.get(colors[i])) {
+						g.drawOval((int) p.x - 5, (int) p.y - 5, 10, 10);
+						g.drawString(colors[i], (int) p.x + 12, (int) p.y + 5);
+					}
 				}
 			}
 		};
