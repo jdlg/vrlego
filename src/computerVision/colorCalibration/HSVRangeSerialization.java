@@ -33,7 +33,7 @@ public class HSVRangeSerialization {
 		}
 	}
 
-	public static HSVRange unserialize(String color, boolean askForCalibration) {
+	public static HSVRange unserialize(String color, Boolean askForCalibration) {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(path + color + ".ser");
@@ -51,7 +51,6 @@ public class HSVRangeSerialization {
 								"Range not Found", JOptionPane.YES_NO_OPTION);
 				if (option == 0) {
 					ManualColorCalibration.main(color);
-					askForCalibration = (Boolean) null;
 					askForCalibration = false;
 				}
 			} else {

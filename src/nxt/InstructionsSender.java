@@ -43,7 +43,7 @@ public class InstructionsSender {
 
 	public void close() {
 		try {
-			dos.writeInt(100000);
+			dos.writeInt(1000000);
 			dos.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -48,7 +48,7 @@ public class InstReceive {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if (inst == 100000) {
+			if (inst == 1000000) {
 				preformeInstructions(0, 0);
 				connected = false;
 			} else {

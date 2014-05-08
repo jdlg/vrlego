@@ -21,7 +21,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
 import com.jme3.texture.Image;
-import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.texture.plugins.AWTLoader;
 import com.jme3.ui.Picture;
@@ -113,14 +112,15 @@ public class SimpleAR extends SimpleApplication {
 				.get(2, 0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
 				.get(2, 0)[0];
 
-		// System.out.println(ry);
+		//TODO test om rz og ry = 0
+		
 		rz = 0;
 		ry = 0;
 
 		float[] angles = { (float) rx, (float) ry, (float) rz };
 		Quaternion rotation = new Quaternion(angles);
 
-		Transform tm = new Transform(new Vector3f((float) tx * 1, (float) ty,
+		Transform tm = new Transform(new Vector3f((float) tx, (float) ty,
 				(float) tz), rotation);
 
 		Vector3f camPose = new Vector3f(0, 0, 0);
@@ -137,26 +137,19 @@ public class SimpleAR extends SimpleApplication {
 
 	@Override
 	public void simpleUpdate(float tpf) {
-		setPosition();
+		tankTracker.updatePositions();
 		setBackground();
 	}
 
-	/**
-	 * Reads a frame from the webcam, and sets it to the background
-	 */
 	private void setBackground() {
 		// videoReader.read(); //TODO This is done in pointTracker; move it?
 		Core.rectangle(image, new Point(640 / 2 - 5, 480 / 2 - 5), new Point(
 				640 / 2 + 5, 480 / 2 + 5), new Scalar(0, 255, 0));
 		BufferedImage bImage = MatConvert.matToBufferedImage(image);
 		Image image = new AWTLoader().load(bImage, true);
-		Texture bgTeaxture = new Texture2D(image);
-		cameraPicture.setTexture(assetManager, (Texture2D) bgTeaxture, true);
+		Texture2D bgTeaxture = new Texture2D(image);
+		cameraPicture.setTexture(assetManager, (Texture2D) bgTeaxture, true);//TODO assetmanager?
 
-	}
-
-	private void setPosition() {
-		tankTracker.updatePositions();
 	}
 
 	@Override

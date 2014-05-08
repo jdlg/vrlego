@@ -9,7 +9,8 @@ public class TankFactory {
 
 	private AssetManager assetManager;
 	private String geomPath = "Models/Teapot/Teapot.obj";
-
+	// TODO deffinere geom i parameter
+	
 	// TODO handle colors (every tank is tracked by to colors)
 
 	public TankFactory(AssetManager assetManager) {
