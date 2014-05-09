@@ -58,7 +58,6 @@ public class SimpleAR extends SimpleApplication {
 
 		viewPort.clearScenes();
 		viewPort.attachScene(cameraPicture);
-		viewPort.setClearFlags(false, true, true);
 
 		cameraPicture.updateGeometricState();
 
