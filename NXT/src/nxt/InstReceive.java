@@ -29,10 +29,14 @@ public class InstReceive {
 		LCD.drawString("Waiting for connection", 0, 0);
 		LCD.refresh();
 		// TODO Wait for USB and BT
+		// Waiting for a USB connection
 		USBConnection conn = USB.waitForConnection();
 		// BTConnection conn = Bluetooth.waitForConnection(); /*(not tested)*/
+		// Creating a DataInputStream to receive instructions
 		dis = conn.openDataInputStream();
 		connected = true;
+		
+		// Waiting for instructions
 		receiveInstructions();
 	}
 
@@ -48,12 +52,12 @@ public class InstReceive {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if (inst == 1000000) {
+			if (inst == 2000000) {
 				preformeInstructions(0, 0);
 				connected = false;
 			} else {
-				int x = inst / 512 - 256;
-				int y = inst % 512 - 256;
+				int x = inst / 1024 - 512;
+				int y = inst % 1024 - 512;
 				preformeInstructions(x, y);
 			}
 		}
@@ -69,8 +73,8 @@ public class InstReceive {
 		LCD.clear();
 		LCD.drawString("Recived " + x + " " + y, 0, 0);
 		LCD.refresh();
-		int v = y * 2;
-		int r = x * 1;
+		int v = y;
+		int r = x / 1;
 		if (v > 0)
 			r *= -1;
 		int aspeed = v + r;

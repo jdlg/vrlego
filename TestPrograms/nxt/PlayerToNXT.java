@@ -11,11 +11,9 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import game.Joystick;
-
 public class PlayerToNXT extends JFrame implements KeyListener {
 
-	private int x = 0, y = 0, topvalue = 255, squareWidth = 127;
+	private int x = 0, y = 0, topvalue = 511, squareWidth = 255;
 	private boolean u = false, d = false, l = false, r = false;
 	private InstructionsSender sender;
 

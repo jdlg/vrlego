@@ -7,7 +7,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.lejos.nxt.ldt.LEJOS_LIBRARY_CONTAINER/pc"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV248"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JInput"/>
 	<classpathentry kind="lib" path="C:/Users/Johan LG/jME3_2014-02-14/lib/eventbus.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Johan LG/jME3_2014-02-14/lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Johan LG/jME3_2014-02-14/lib/jbullet.jar"/>

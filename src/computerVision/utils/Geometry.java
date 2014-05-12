@@ -1,4 +1,4 @@
-package computerVision;
+package computerVision.utils;
 
 import org.opencv.core.Point;
 

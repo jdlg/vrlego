@@ -3,7 +3,6 @@ package game;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -70,6 +69,7 @@ public class SimpleAR extends SimpleApplication {
 		ViewPort viewPort2 = renderManager.createPostView("Gui 2", cam2);
 		viewPort2.setClearFlags(false, true, true);
 		viewPort2.attachScene(rootNode);
+		cam2.setFrustumPerspective(32, (float) (640.0 / 480.0), 1, 1000);
 
 		image = new Mat();
 		videoReader = new VideoReader(image, 0);
@@ -99,39 +99,47 @@ public class SimpleAR extends SimpleApplication {
 	}
 
 	private void chessCalib() {
+
+		// Finding the extrinsic parameters
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
-				4, 4.1, 1, rvec, tvec);
+				4, 4.1, 10, rvec, tvec);
 
+		// Creating a PointPoseTracker which will be used to track the tank
 		PointPoseTracker ppt = new PointPoseTracker(videoReader,
 				homographyTransorm);
 		tankTracker = new TankTracker(tankList.get(0), ppt);
 
-		double pi = Math.PI, rx = rvec.get(0, 0)[0], ry = rvec.get(1, 0)[0], rz = rvec
-				.get(2, 0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
+		// Setting the extrinsic parameters into variables. rz and ry must be
+		// approximately 0 for the virtual camera to be positioned correctly
+		double rx = rvec.get(0, 0)[0], ry = rvec.get(1, 0)[0], rz = rvec.get(2,
+				0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
 				.get(2, 0)[0];
 
-		//TODO test om rz og ry = 0
-		
-		rz = 0;
-		ry = 0;
+//		ry = 0;
+//		rz = 0;
 
+		// Finding the translation between the chessboard and the camera, and
+		// use it to find the position of the camera
 		float[] angles = { (float) rx, (float) ry, (float) rz };
 		Quaternion rotation = new Quaternion(angles);
-
 		Transform tm = new Transform(new Vector3f((float) tx, (float) ty,
 				(float) tz), rotation);
-
 		Vector3f camPose = new Vector3f(0, 0, 0);
 		tm.transformInverseVector(camPose, camPose);
-
-		float[] angles2 = { (float) (rx - pi * 4 / 8), (float) (ry - pi),
-				(float) (rz) };
-
 		cam2.setLocation(new Vector3f(camPose.getX(), camPose.getZ(), -camPose
 				.getY()));
+
+		// Applying the rotation to the camera
+		float[] angles2 = { (float) (rx - Math.PI * 4 / 8),
+				(float) (ry - Math.PI), (float) (rz) };
 		rotation = new Quaternion(angles2);
 		cam2.setRotation(rotation);
+
+		System.out.printf("Camera Pose: %.1f  %.1f  %.1f\n", camPose.getX(),
+				camPose.getZ(), -camPose.getY());
+		System.out.printf("Camera Rotation: %.3f  %.3f  %.3f\n", rx - Math.PI * 4
+				/ 8, ry - Math.PI, rz);
 	}
 
 	@Override
@@ -142,13 +150,17 @@ public class SimpleAR extends SimpleApplication {
 
 	private void setBackground() {
 		// videoReader.read(); //TODO This is done in pointTracker; move it?
-		Core.rectangle(image, new Point(640 / 2 - 5, 480 / 2 - 5), new Point(
-				640 / 2 + 5, 480 / 2 + 5), new Scalar(0, 255, 0));
+
+		// Core.rectangle(image, new Point(640 / 2 - 5, 480 / 2 - 5), new Point(
+		// 640 / 2 + 5, 480 / 2 + 5), new Scalar(0, 255, 0));
+
+		// Convert the image to BufferedImage
 		BufferedImage bImage = MatConvert.matToBufferedImage(image);
+
+		// Create a texture with the image and apply it to the background
 		Image image = new AWTLoader().load(bImage, true);
 		Texture2D bgTeaxture = new Texture2D(image);
-		cameraPicture.setTexture(assetManager, (Texture2D) bgTeaxture, true);//TODO assetmanager?
-
+		cameraPicture.setTexture(assetManager, (Texture2D) bgTeaxture, true);
 	}
 
 	@Override

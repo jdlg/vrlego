@@ -106,7 +106,7 @@ public class Calibration {
 		flatPoints.fromList(flatPointsArray);
 
 		// Find rvec and tvec
-		double W = image.width(), H = image.height(), fl = H * 1.57; // TODO fl?
+		double W = image.width(), H = image.height(), fl = 760; // TODO fl?
 		Mat cameraMatrix = new Mat(3, 3, CvType.CV_64F);
 		cameraMatrix.put(0, 0, fl, 0, W / 2, 0, fl, H / 2, 0, 0, 1);
 		Calib3d.solvePnP(flatPoints, avgPoints, cameraMatrix,
@@ -114,10 +114,10 @@ public class Calibration {
 
 		// Find the HomographyTransform
 		ArrayList<Point> corners = new ArrayList<>();
-		corners.add(avgPointsArray.get(cols * rows - 1));// 1
-		corners.add(avgPointsArray.get(rows - 1));// 2
-		corners.add(avgPointsArray.get(0));// 3
-		corners.add(avgPointsArray.get(cols * rows - rows));// 4
+		corners.add(avgPointsArray.get(cols * rows - 1));
+		corners.add(avgPointsArray.get(rows - 1));
+		corners.add(avgPointsArray.get(0));
+		corners.add(avgPointsArray.get(cols * rows - rows));
 
 		HomographyTransorm ht = new HomographyTransorm(corners, (cols - 1)
 				* squareSize, (rows - 1) * squareSize);

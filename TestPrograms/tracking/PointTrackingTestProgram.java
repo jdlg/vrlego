@@ -33,7 +33,7 @@ public class PointTrackingTestProgram {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.setColor(Color.black);
-				HashMap<String, ArrayList<Point>> points = pt.findPointMap(3,
+				HashMap<String, ArrayList<Point>> points = pt.findPointMap(1,
 						colors);
 				for (int i = 0; i < colors.length; i++) {
 					for (Point p : points.get(colors[i])) {

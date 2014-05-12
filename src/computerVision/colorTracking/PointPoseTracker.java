@@ -12,7 +12,6 @@ import computerVision.video.VideoReader;
 public class PointPoseTracker extends PointTracker {
 
 	private HomographyTransorm ht;
-	
 
 	public PointPoseTracker(VideoReader reader, HomographyTransorm ht) {
 		super(reader);
@@ -21,7 +20,18 @@ public class PointPoseTracker extends PointTracker {
 
 	@Override
 	public HashMap<String, ArrayList<Point>> findPointMap() {
-		HashMap<String, ArrayList<Point>> pointMap = super.findPointMap();
+//		return applyHT(super.findPointMap());
+		return super.findPointMap();
+	}
+
+	@Override
+	public HashMap<String, ArrayList<Point>> findPointMap(int numberOfPoints,
+			String... colors) {
+		return applyHT(super.findPointMap(numberOfPoints, colors));
+	}
+
+	private HashMap<String, ArrayList<Point>> applyHT(
+			HashMap<String, ArrayList<Point>> pointMap) {
 		HashMap<String, ArrayList<Point>> returnPointMap = new HashMap<>();
 		Set<String> colors = pointMap.keySet();
 		for (String color : colors) {
@@ -29,6 +39,5 @@ public class PointPoseTracker extends PointTracker {
 			returnPointMap.put(color, ht.applyTransform(points));
 		}
 		return returnPointMap;
-
 	}
 }

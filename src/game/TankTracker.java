@@ -28,7 +28,7 @@ public class TankTracker {
 				&& pointPose.get(tank.getColor2()).size() > 0) {
 			Point bluePoint = pointPose.get(tank.getColor1()).get(0);
 			Point redPoint = pointPose.get(tank.getColor2()).get(0);
-			float angle = (float) computerVision.Geometry.calculateAngle(
+			float angle = (float) computerVision.utils.Geometry.calculateAngle(
 					bluePoint, redPoint);
 			Point midPint = new Point((bluePoint.x + redPoint.x) / 2,
 					(bluePoint.y + redPoint.y) / 2);

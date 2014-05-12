@@ -42,11 +42,11 @@ public class PoseTrackingTestProgram {
 				super.paintComponent(g);
 				g.setColor(Color.black);
 
-				int r = 20;
+				int r = 30;
 				g.translate(w / 2, h / 2);
 
 				int chessWidth = (int) (cols * squareSize), chessHeight = (int) (rows * squareSize);
-				boolean blackSquare = true;
+				boolean blackSquare = false;
 				for (int j = 0; j < rows; j++) {
 					for (int i = 0; i < cols; i++) {
 						Color color = blackSquare ? Color.black : Color.white;

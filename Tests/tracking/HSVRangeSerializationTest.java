@@ -25,18 +25,17 @@ public class HSVRangeSerializationTest {
 		new File(HSVRangeSerialization.getFilePath("test")).delete();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void test() {
 		double[] min = { 10.0, 20.0, 40.0 };
 		double[] max = { 20.0, 40.0, 80.0 };
 		HSVRange range = new HSVRange(min, max);
 		HSVRangeSerialization.serialize(range, "test");
-		HSVRange newRange = HSVRangeSerialization.unserialize("test");
+		HSVRange newRange = HSVRangeSerialization.unserialize("test",false);
 		for (int i = 0; i < 3; i++) {
-			Assert.assertTrue(range.getMinValues()[i] == newRange
+			assertTrue(range.getMinValues()[i] == newRange
 					.getMinValues()[i]);
-			Assert.assertTrue(range.getMaxValues()[i] == newRange
+			assertTrue(range.getMaxValues()[i] == newRange
 					.getMaxValues()[i]);
 
 		}
