@@ -12,6 +12,8 @@ import org.opencv.core.Scalar;
  * 
  */
 public class HSVRange implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private double[] minValues;
 	private double[] maxValues;
 
@@ -95,7 +97,7 @@ public class HSVRange implements Serializable {
 	}
 
 	/**
-	 * Returns true if H-min is higher then H-max. This is can be useful if
+	 * Returns true if H-min is higher then H-max. This can be useful if
 	 * thresholding a range of colors that in on both ends of the hue spectrum,
 	 * witch is often the case for red colors.
 	 * 

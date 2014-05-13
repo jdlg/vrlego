@@ -20,6 +20,12 @@ public class HSVRangeSerialization {
 
 	private static String path = "HSVRanges/";
 
+	/**
+	 * Saves an HSVRange to the HSVRanges/ directory.
+	 * 
+	 * @param range
+	 * @param color
+	 */
 	public static void serialize(HSVRange range, String color) {
 		try {
 			FileOutputStream fos = new FileOutputStream(path + color + ".ser");
@@ -33,6 +39,19 @@ public class HSVRangeSerialization {
 		}
 	}
 
+	/**
+	 * Loads an HSVRange object from the HSVRanges/ directory.
+	 * 
+	 * @param color
+	 * @param askForCalibration
+	 *            If true, the user will be ask to performed a manual color
+	 *            calibration if the HSVRange cannot be found in the directory.
+	 *            This parameter is set to true if the calibration is started,
+	 *            and the variable should be used again when trying to load
+	 *            multiple ranges in a sequence. This will hinder the
+	 *            application from starting multiple calibrations.
+	 * @return
+	 */
 	public static HSVRange unserialize(String color, Boolean askForCalibration) {
 		FileInputStream fis;
 		try {
@@ -68,6 +87,11 @@ public class HSVRangeSerialization {
 		return new HSVRange(min, min);
 	}
 
+	/**
+	 * Load all HSVRanges from the HSVRanges/ directory into an HSVRangeSet.
+	 * 
+	 * @return
+	 */
 	public static HSVRangeSet unserializeSet() {
 		HSVRangeSet set = new HSVRangeSet();
 		File folder = new File(path);
@@ -88,14 +112,27 @@ public class HSVRangeSerialization {
 		return set;
 	};
 
+	/**
+	 * Loads an HSVRangeSet for the four colors red, blue, yellow and green.
+	 * 
+	 * @return
+	 */
 	public static HSVRangeSet unserialize4ColorSet() {
 		String[] colors = { "red", "blue", "yellow", "green" };
 		return unserializeSet(true, colors);
 	}
 
-	public static HSVRangeSet unserializeSet(boolean askForCalibration, String... colors) {
+	/**
+	 * Loads an HSVRangeSet for a set of colors
+	 * 
+	 * @param askForCalibration
+	 * @param colors
+	 * @return
+	 */
+	public static HSVRangeSet unserializeSet(boolean askForCalibration,
+			String... colors) {
 		HSVRangeSet set = new HSVRangeSet();
-		boolean calibrate  = askForCalibration;
+		boolean calibrate = askForCalibration;
 		for (int i = 0; i < colors.length; i++) {
 			String name = colors[i];
 			set.put(name, unserialize(name, calibrate));

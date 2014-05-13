@@ -3,10 +3,6 @@ package computerVision.colorTracking;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-
-import computerVision.colorCalibration.ManualColorCalibration;
-
 /**
  * A HashMar with String as keys and HSVRange as values
  * 
@@ -15,4 +11,6 @@ import computerVision.colorCalibration.ManualColorCalibration;
  */
 public class HSVRangeSet extends HashMap<String, HSVRange> implements
 		Serializable {
+
+	private static final long serialVersionUID = 1L;
 }

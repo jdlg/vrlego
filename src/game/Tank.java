@@ -1,7 +1,5 @@
 package game;
 
-import nxt.InstructionsSender;
-
 import com.jme3.math.Quaternion;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -20,9 +18,16 @@ public class Tank extends Node {
 		this.color1 = color1;
 		this.color2 = color2;
 		attachChild(geom);
-		scale(20f);
+		scale(22f);
 	}
 
+	/**
+	 * Set The coordinates and rotation of the tank
+	 * 
+	 * @param x
+	 * @param z
+	 * @param a
+	 */
 	public void setXZA(float x, float z, float a) {
 		this.x = x;
 		this.z = z;
@@ -32,8 +37,6 @@ public class Tank extends Node {
 
 	private void updateXZA() {
 		setLocalTranslation(x, -12, z);
-//		setLocalTranslation(x, 5, z);
-//		setLocalTranslation(x, 0, z);
 		Quaternion rotation = new Quaternion();
 		rotation.fromAngles(0, angle, 0);
 		setLocalRotation(rotation);

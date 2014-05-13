@@ -7,19 +7,26 @@ import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 
+/**
+ * Uses a com.jme3.input.InputManage to listen for arrow key presses, and sends
+ * the corresponding instructions to the NXT
+ * 
+ * @author Johan LG
+ * 
+ */
 public class Player extends Pilot {
-		
+
 	public Player(InputManager inputManager, InstructionsSender sender) {
 		this.sender = sender;
-		
-		//TODO create separate class for handling input?
+
+		// TODO create separate class for handling input?
 		inputManager.addMapping("right", new KeyTrigger(KeyInput.KEY_RIGHT));
 		inputManager.addMapping("up", new KeyTrigger(KeyInput.KEY_UP));
 		inputManager.addMapping("left", new KeyTrigger(KeyInput.KEY_LEFT));
 		inputManager.addMapping("down", new KeyTrigger(KeyInput.KEY_DOWN));
 		inputManager.addListener(new ActionListener() {
-			
-			int value = 255, r = 0, u = 0, l = 0, d = 0;
+
+			int value = 511, r = 0, u = 0, l = 0, d = 0;
 
 			@Override
 			public void onAction(String name, boolean press, float arg2) {

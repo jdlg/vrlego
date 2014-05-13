@@ -9,6 +9,13 @@ import org.opencv.core.Point;
 import computerVision.perspective.HomographyTransorm;
 import computerVision.video.VideoReader;
 
+/**
+ * Has the same functionality as the PointTracker class except it applies a
+ * homography transformation to all found points
+ * 
+ * @author Johan LG
+ * 
+ */
 public class PointPoseTracker extends PointTracker {
 
 	private HomographyTransorm ht;
@@ -20,7 +27,7 @@ public class PointPoseTracker extends PointTracker {
 
 	@Override
 	public HashMap<String, ArrayList<Point>> findPointMap() {
-//		return applyHT(super.findPointMap());
+		// return applyHT(super.findPointMap());
 		return super.findPointMap();
 	}
 

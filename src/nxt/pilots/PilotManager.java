@@ -1,7 +1,5 @@
 package nxt.pilots;
 
-import java.util.ArrayList;
-
 import com.jme3.input.InputManager;
 
 import nxt.NXTConnectionFactory;
@@ -10,7 +8,7 @@ public class PilotManager {
 	
 	private NXTConnectionFactory connectionFactory;
 	private Player player;
-	private ArrayList<AI> AIList;
+//	private ArrayList<AI> AIList;
 	
 	public PilotManager(InputManager inputManager/*, int numberOfPlayers, int numberOfAIs*/) {
 		connectionFactory = new NXTConnectionFactory();

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.input.KeyInput;
@@ -30,6 +28,15 @@ import computerVision.perspective.HomographyTransorm;
 import computerVision.utils.MatConvert;
 import computerVision.video.VideoReader;
 
+/**
+ * A jMonkey application using augmented reality. A chessboard calibration is
+ * performed during initialization to calibrate the camera, and the Utah teapot
+ * will be will be placed where the camera can see a red and blue dot. A new
+ * camera calibration can be started by pressing the space key.
+ * 
+ * @author Johan LG
+ * 
+ */
 public class SimpleAR extends SimpleApplication {
 
 	private Picture cameraPicture = new Picture("background");
@@ -116,8 +123,8 @@ public class SimpleAR extends SimpleApplication {
 				0)[0], tx = tvec.get(0, 0)[0], ty = tvec.get(1, 0)[0], tz = tvec
 				.get(2, 0)[0];
 
-//		ry = 0;
-//		rz = 0;
+		// ry = 0;
+		// rz = 0;
 
 		// Finding the translation between the chessboard and the camera, and
 		// use it to find the position of the camera
@@ -138,8 +145,8 @@ public class SimpleAR extends SimpleApplication {
 
 		System.out.printf("Camera Pose: %.1f  %.1f  %.1f\n", camPose.getX(),
 				camPose.getZ(), -camPose.getY());
-		System.out.printf("Camera Rotation: %.3f  %.3f  %.3f\n", rx - Math.PI * 4
-				/ 8, ry - Math.PI, rz);
+		System.out.printf("Camera Rotation: %.3f  %.3f  %.3f\n", rx - Math.PI
+				* 4 / 8, ry - Math.PI, rz);
 	}
 
 	@Override

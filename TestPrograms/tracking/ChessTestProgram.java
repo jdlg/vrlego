@@ -1,6 +1,5 @@
 package tracking;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
@@ -16,17 +15,10 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.MatOfPoint3f;
-import org.opencv.core.Point;
 import org.opencv.core.Point3;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 
-import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.colorTracking.HSVRange;
-import computerVision.colorTracking.PointFinder;
 import computerVision.gui.BGRMatPanel;
-import computerVision.perspective.HomographyTransorm;
 import computerVision.video.VideoReader;
 
 public class ChessTestProgram {
@@ -71,7 +63,7 @@ public class ChessTestProgram {
 
 					Calib3d.solvePnP(points, chssPoints, cameraMatrix,
 							new MatOfDouble(), rvec, tvec);
-					
+
 				}
 				super.paintComponent(g);
 			}

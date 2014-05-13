@@ -6,13 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 
-import computerVision.colorCalibration.HSVRangeSerialization;
-import computerVision.colorTracking.HSVRange;
-import computerVision.colorTracking.PointFinder;
 import computerVision.utils.MatConvert;
 
 /**
@@ -22,6 +16,7 @@ import computerVision.utils.MatConvert;
  */
 public class BGRMatPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	protected Mat mat;
 
 	public BGRMatPanel(Mat mat) {

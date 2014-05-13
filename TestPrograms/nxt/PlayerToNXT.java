@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 public class PlayerToNXT extends JFrame implements KeyListener {
 
+	private static final long serialVersionUID = 1L;
 	private int x = 0, y = 0, topvalue = 511, squareWidth = 255;
 	private boolean u = false, d = false, l = false, r = false;
 	private InstructionsSender sender;
@@ -64,6 +65,8 @@ public class PlayerToNXT extends JFrame implements KeyListener {
 	}
 
 	class controlsPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);

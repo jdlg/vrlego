@@ -6,8 +6,8 @@ import java.io.IOException;
 import lejos.pc.comm.NXTConnector;
 
 /**
- * Sends instructions to the NXT. Instructions are sent as 2 ints from -31 to
- * 31, and can be recived and executed by an NXT running ReciveInst
+ * Sends instructions to the NXT. Instructions are sent as 2 ints from -511 to
+ * 511, and can be received and executed by an NXT running InstRecive
  * 
  * @author Johan LG
  * 
@@ -16,7 +16,6 @@ import lejos.pc.comm.NXTConnector;
 public class InstructionsSender {
 
 	private DataOutputStream dos;
-	private int precision = 511;
 
 	public InstructionsSender(String deviceURL) {
 		NXTConnector connector = new NXTConnector();
@@ -32,24 +31,27 @@ public class InstructionsSender {
 		dos = new DataOutputStream(connector.getOutputStream());
 	}
 
-	public void sendInstruction(int r, int v) {
-		if (r > 511)
-			r = 511;
-		else if (r < -511)
-			r = -511;
-		if (v > 511)
-			v = 511;
-		else if (v < -511)
-			v = -511;
+	public void sendInstruction(int rotation, int speed) {
+		if (rotation > 511)
+			rotation = 511;
+		else if (rotation < -511)
+			rotation = -511;
+		if (speed > 511)
+			speed = 511;
+		else if (speed < -511)
+			speed = -511;
 		try {
-			dos.writeInt((r + 512) * 1024 + v + 512);
+			dos.writeInt((rotation + 512) * 1024 + speed + 512);
 			dos.flush();
-			System.out.println("sendt " + r + " " + v);
+			System.out.println("sendt " + rotation + " " + speed);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * Send the close instruction to the NXT and closes the connection
+	 */
 	public void close() {
 		try {
 			dos.writeInt(2000000);

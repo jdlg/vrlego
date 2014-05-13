@@ -1,7 +1,5 @@
 package nxt;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class NXTConnectionFactory {
 
 	/**

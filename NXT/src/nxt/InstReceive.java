@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import lejos.nxt.LCD;
 import lejos.nxt.Motor;
-import lejos.nxt.comm.BTConnection;
-import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.USB;
 import lejos.nxt.comm.USBConnection;
 

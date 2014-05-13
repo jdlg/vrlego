@@ -29,6 +29,7 @@ public class PointTrackingTestProgram {
 		final VideoReader reader = new VideoReader(image, 0);
 		final PointTracker pt = new PointTracker(reader);
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
+			private static final long serialVersionUID = 1L;
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);

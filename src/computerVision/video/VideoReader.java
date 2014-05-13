@@ -1,14 +1,11 @@
 package computerVision.video;
 
-import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Size;
 import org.opencv.highgui.VideoCapture;
-import org.opencv.imgproc.Imgproc;
 
 /**
- * Reads from a wabcam and continuously writes the data to a Mat
+ * For reading from a webcam. This Class implements Runnable, and can be started
+ * in a tread to continuously read from the device. 
  * 
  * @author Johan LG
  * 
@@ -18,9 +15,17 @@ public class VideoReader implements Runnable {
 	private VideoCapture capture;
 	private Mat imageMat;
 
-	public VideoReader(Mat mat, int device) {
+	/**
+	 * 
+	 * @param image
+	 *            The image will be loaded into this Mat whenever a read is
+	 *            performed.
+	 * @param device
+	 *            The device from which the reads will be performed.
+	 */
+	public VideoReader(Mat image, int device) {
 		capture = new VideoCapture(device);
-		this.imageMat = mat;
+		this.imageMat = image;
 
 		// Some cameras will read a dark image on the first few reads
 		for (int i = 0; i < 4; i++) {
@@ -33,6 +38,11 @@ public class VideoReader implements Runnable {
 		return imageMat;
 	}
 
+	/**
+	 * Reads an image from the the device.
+	 * 
+	 * @return
+	 */
 	public Mat read() {
 		capture.read(imageMat);
 		return imageMat;

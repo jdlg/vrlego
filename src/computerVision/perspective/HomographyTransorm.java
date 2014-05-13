@@ -59,7 +59,6 @@ public class HomographyTransorm {
 	 * Finds the position of an ArrayList of Points in the homographyc plane
 	 * 
 	 * @param points
-	 *            The points in perspective
 	 * @return
 	 */
 
@@ -79,6 +78,12 @@ public class HomographyTransorm {
 		return points;
 	}
 
+	/**
+	 * Finds the position of an ArrayList of Points in the homographyc plane
+	 * 
+	 * @param point
+	 * @return
+	 */
 	public Point applyTransform(Point point) {
 		ArrayList<Point> points = new ArrayList<>();
 		points.add(point);

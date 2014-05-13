@@ -3,13 +3,18 @@ package computerVision.utils;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 import computerVision.colorTracking.HSVRange;
 import computerVision.colorTracking.Thresholding;
 
+/**
+ * for converting matrices (Mat) to BufferedImmage
+ * 
+ * @author Johan LG
+ * 
+ */
 public class MatConvert {
 
 	public static BufferedImage matToBufferedImage(Mat imageMat) {
@@ -25,10 +30,18 @@ public class MatConvert {
 		final byte[] targetPixels = ((DataBufferByte) image.getRaster()
 				.getDataBuffer()).getData();
 		System.arraycopy(sourcePixels, 0, targetPixels, 0, targetPixels.length);
-		
+
 		return image;
 	}
 
+	/**
+	 * Thresholds the image using an HSVRange before converting it to a
+	 * BufferedImage
+	 * 
+	 * @param imageMat
+	 * @param range
+	 * @return
+	 */
 	public static BufferedImage matToBufferedImage(Mat imageMat, HSVRange range) {
 		Mat hsvMat = new Mat();
 		Imgproc.cvtColor(imageMat, hsvMat, Imgproc.COLOR_BGR2HSV_FULL);

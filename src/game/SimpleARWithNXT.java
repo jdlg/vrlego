@@ -3,8 +3,15 @@ package game;
 import nxt.pilots.PilotManager;
 import org.opencv.core.Core;
 
+/**
+ * Same as the SimpleAR application, with communication to an NXT robot that can
+ * be controlled with the arrow keys
+ * 
+ * @author Johan LG
+ * 
+ */
 public class SimpleARWithNXT extends SimpleAR {
-	
+
 	private PilotManager pilotManager;
 
 	public static void main(String[] args) {
@@ -15,15 +22,15 @@ public class SimpleARWithNXT extends SimpleAR {
 	}
 
 	@Override
-	public void simpleInitApp(){
+	public void simpleInitApp() {
 		super.simpleInitApp();
 		pilotManager = new PilotManager(inputManager);
 	}
-	
+
 	@Override
 	public void destroy() {
 		pilotManager.closeAll();
 		super.destroy();
 	}
-	
+
 }
