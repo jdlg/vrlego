@@ -1,6 +1,6 @@
 package tracking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -44,11 +44,11 @@ public class PerspectiveChangerTest {
 				.applyTransform(points);
 
 		ArrayList<Point> expectedPoints = new ArrayList<>();
-		expectedPoints.add(new Point(0, 20));
-		expectedPoints.add(new Point(75, 25));
-		expectedPoints.add(new Point(45, 50));
-		expectedPoints.add(new Point(35, 80));
-		expectedPoints.add(new Point(30, 30));
+		expectedPoints.add(new Point(-50, -30));
+		expectedPoints.add(new Point(25, -25));
+		expectedPoints.add(new Point(-5, 0));
+		expectedPoints.add(new Point(-15, 30));
+		expectedPoints.add(new Point(-20, -20));
 
 		for (int i = 0; i < resultPoints.size(); i++) {
 			Point resultPoint = resultPoints.get(i);
