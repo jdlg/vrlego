@@ -17,12 +17,9 @@ import computerVision.utils.MatConvert;
  * @author Johan LG
  * 
  */
+@SuppressWarnings("serial")
 public class GrayMatPanel extends JPanel {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private Mat mat;
 	private HSVRange range;
 

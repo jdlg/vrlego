@@ -11,9 +11,9 @@ import org.opencv.core.Scalar;
  * @author Johan LG
  * 
  */
+@SuppressWarnings("serial")
 public class HSVRange implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 	private double[] minValues;
 	private double[] maxValues;
 

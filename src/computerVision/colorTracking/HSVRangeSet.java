@@ -9,8 +9,7 @@ import java.util.HashMap;
  * @author Johan LG
  * 
  */
+@SuppressWarnings("serial")
 public class HSVRangeSet extends HashMap<String, HSVRange> implements
 		Serializable {
-
-	private static final long serialVersionUID = 1L;
 }

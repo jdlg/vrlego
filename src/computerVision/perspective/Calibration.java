@@ -16,7 +16,7 @@ import computerVision.video.VideoReader;
 
 public class Calibration {
 
-	// TODO defaults
+	// TODO defaults parameters 
 	/**
 	 * Looks for a chessboard pattern to calculate the camera extrinsic values
 	 * 

@@ -14,9 +14,9 @@ import computerVision.utils.MatConvert;
  * @author Johan LG
  *
  */
+@SuppressWarnings("serial")
 public class BGRMatPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
 	protected Mat mat;
 
 	public BGRMatPanel(Mat mat) {

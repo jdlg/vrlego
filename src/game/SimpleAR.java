@@ -110,7 +110,7 @@ public class SimpleAR extends SimpleApplication {
 		// Finding the extrinsic parameters
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
-				4, 4.1, 10, rvec, tvec);
+				4, 4.1, 30, rvec, tvec);
 
 		// Creating a PointPoseTracker which will be used to track the tank
 		PointPoseTracker ppt = new PointPoseTracker(videoReader,
