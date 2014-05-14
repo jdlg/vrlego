@@ -31,7 +31,7 @@ public class PoseTrackingTestProgram {
 		JFrame camFrame = new JFrame("Pose Tracking test");
 		Mat image = new Mat();
 		final VideoReader reader = new VideoReader(image, 0);
-		final int cols = 5, rows = 4, squareSize = 41;
+		final int cols = 5, rows = 4, squareSize = 39;
 		HomographyTransorm ht = Calibration.chessboardCalibration(reader, cols,
 				rows, squareSize, 5, new Mat(), new Mat());
 		final PointPoseTracker ppt = new PointPoseTracker(reader, ht);

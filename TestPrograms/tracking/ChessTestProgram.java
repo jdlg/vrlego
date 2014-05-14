@@ -40,7 +40,7 @@ public class ChessTestProgram {
 		BGRMatPanel camPanel = new BGRMatPanel(image) {
 			@Override
 			protected void paintComponent(Graphics g) {
-				int w = 3, h = 4, r = 41 /* mm */;
+				int w = 3, h = 4, r = 39 /* mm */;
 				MatOfPoint2f chssPoints = new MatOfPoint2f();
 				boolean found = Calib3d.findChessboardCorners(image, new Size(
 						w, h), chssPoints);
