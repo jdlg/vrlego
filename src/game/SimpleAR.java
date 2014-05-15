@@ -103,8 +103,8 @@ public class SimpleAR extends SimpleApplication {
 		inputManager.addListener(actionListener, "chessCalib");
 
 		rootNode.scale(scale);
-		
-		guiViewPort.clearScenes();
+
+		// guiViewPort.clearScenes(); //This line removes the guiNode
 	}
 
 	private void chessCalib() {
@@ -112,7 +112,7 @@ public class SimpleAR extends SimpleApplication {
 		// Finding the extrinsic parameters
 		Mat rvec = new Mat(), tvec = new Mat();
 		homographyTransorm = Calibration.chessboardCalibration(videoReader, 5,
-				4, 4.1, 3, rvec, tvec);
+				4, 4.1, 10, rvec, tvec);
 
 		// Creating a PointPoseTracker which will be used to track the tank
 		PointPoseTracker ppt = new PointPoseTracker(videoReader,
@@ -140,8 +140,8 @@ public class SimpleAR extends SimpleApplication {
 				.getY()));
 
 		// Applying the rotation to the camera
-		float[] angles2 = { (float) (rx - Math.PI / 2),
-				(float) (ry - Math.PI), (float) (rz) };
+		float[] angles2 = { (float) (rx - Math.PI / 2), (float) (ry - Math.PI),
+				(float) (rz) };
 		rotation = new Quaternion(angles2);
 		cam2.setRotation(rotation);
 
